@@ -16,5 +16,5 @@ To install Aurora, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/Aurora-Assistant.git
+   git clone https://github.com/alejandroMortur/Aurora-Assistant.git
 

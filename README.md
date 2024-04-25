@@ -19,8 +19,8 @@ To install Aurora, follow these steps:
    git clone https://github.com/alejandroMortur/Aurora-Assistant.git
    ```
 
+2. Run this comand on your terminal to launch de asistant:
+
    ```bash
     python .\RunMe.py
    ```
-
-Run that file to launch de asistant

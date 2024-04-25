@@ -14,9 +14,11 @@ Aurora is a versatile and intuitive virtual assistant developed in Python. Desig
 To install Aurora, follow these steps:
 
 1. Clone the repository:
-y
+
    ```bash
    git clone https://github.com/alejandroMortur/Aurora-Assistant.git
 
    ```bash
-   pip install -r requirements.txt
+    python .\RunMe.py
+
+Run that file to launch de asistant

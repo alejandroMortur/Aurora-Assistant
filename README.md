@@ -22,5 +22,5 @@ To install Aurora, follow these steps:
 2. Run this comand on your terminal to launch de asistant:
 
    ```bash
-   python .\RunMe.py
+   python .\Main.py
    ```

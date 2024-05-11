@@ -1,23 +1,28 @@
 import speech_recognition as sr
 from GenerateModule import generateAudio
 
-def getVoice():
-
+def getVoice(language):
     r = sr.Recognizer()
-    print(sr.Microphone.list_microphone_names())
 
+    # List available audio input devices
+    # Replace 1 with the corresponding index of your microphone if it's not the default one
+    print(sr.Microphone.list_microphone_names())
+    
     with sr.Microphone() as source:
-        
-        r.adjust_for_ambient_noise(source,duration=1)
-        print("say anything : ")
-        audio= r.listen(source)
+        # Adjust for ambient noise
+        r.adjust_for_ambient_noise(source, duration=1)
+        print("Say something: ")
+        audio = r.listen(source)
         
         try:
-            
-            text = r.recognize_google(audio)
+            # Use Google Speech Recognition for speech recognition
+            text = r.recognize_google(audio, language=language)
             print(text)
-            generateAudio("hola alejandro")
+            return text
             
-        except:   
-            print("sorry, could not recognise")
-            generateAudio("lo siento no te he entendido")
+        except sr.UnknownValueError:
+            print("Sorry, I didn't understand what you said.")
+            generateAudio("Sorry, I didn't understand.")
+        except sr.RequestError as e:
+            print("Could not complete the request; {0}".format(e))
+            generateAudio("An error occurred while processing your request.")

@@ -1,0 +1,5 @@
+# Ignore all files with .gguf extension
+*.gguf
+
+# Ignore all files with .exe extension
+*.exe

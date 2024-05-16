@@ -1,0 +1,11 @@
+{
+  "keywords": {
+    "onlineSearch": ["search", "google", "search"],
+    "openUtilities": ["opens"],
+    "LLMUtilities": ["tell me"],
+    "LLMExtraInf": ["no", "I want", "more"],
+    "closeUtilities": ["closes"],
+    "putAlarm": ["put"],
+    "greeting": ["hello"]
+  }
+}

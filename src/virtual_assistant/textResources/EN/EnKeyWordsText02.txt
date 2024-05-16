@@ -1,1 +1,0 @@
-search,google,search,open,tell me,no,I want,more,more,close,put,hello

@@ -1,0 +1,11 @@
+{
+  "keywords": {
+    "onlineSearch": ["busca", "google", "búsca"],
+    "openUtilities": ["abre"],
+    "LLMUtilities": ["dime"],
+    "LLMExtraInf": ["no", "quiero", "más", "mas"],
+    "closeUtilities": ["cierra"],
+    "putAlarm": ["pon"],
+    "greeting": ["hola"]
+  }
+}

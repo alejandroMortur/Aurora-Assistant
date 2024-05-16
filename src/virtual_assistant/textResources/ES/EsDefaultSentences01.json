@@ -1,0 +1,12 @@
+{
+  "responses": {
+    "onlineSearch": ["Claro dime qué quieres que busque por ti"],
+    "openUtilities": ["¿Claro qué programa quieres abrir?"],
+    "LLMUtilities": ["Claro ahora te digo. Déjame pensar"],
+    "moreInfo": ["¿Te ha sido útil esta información? ¿O quieres más?"],
+    "closeUtilities": ["¿Claro qué programa quieres que cierre?"],
+    "putAlarm": ["¿Claro puedo configurarte una alarma? ¿Cuándo la quieres?"],
+    "greeting": ["¡Buenas!!!","hola!!","Saludos!","Que pasa?","Saludos cordiales"],
+    "notUnderstood": ["Lo siento, no te he entendido"]
+  }
+}

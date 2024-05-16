@@ -1,0 +1,12 @@
+{
+  "responses": {
+    "onlineSearch": ["Sure, tell me what you want me to search for you"],
+    "openUtilities": ["Sure what program you want to open?"],
+    "LLMUtilities": ["Sure, I'll tell you now. Let me think"],
+    "moreInfo": ["Was this information helpful to you? Or do you want more?"],
+    "closeUtilities": ["Sure which program do you want me to close?"],
+    "putAlarm": ["Sure, I can set an alarm for you? When do you want it?"],
+    "greeting": ["Hello!!!","hello!!","Greetings!","What's up?","Best regards"],
+    "notUnderstood": ["Sorry, I didn't understand you"]
+  }
+}

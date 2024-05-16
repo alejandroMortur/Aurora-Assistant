@@ -1,70 +1,78 @@
 import os 
 import sys
+import random
 from GenerateModule import generateAudio
 from MicHandler import getVoice
 from LLMModule import getLLMText
-from TextHandler import read_file, read_word
-defautLanguange = "es-ES"
+from TextHandler import read_file, read_word, read_lines
+
+defaultLanguage = "es-ES"
 
 File = [
-    
-    "./textResources/IntroText01.txt",
-    "./textResources/ES/EsKeyWordsText02.txt",
-    "./textResources/ES/EsDefaultSentences01.txt",
-    "./textResources/EN/EnKeyWordsText02.txt",
-    "./textResources/EN/EnDefaultSentences01.txt"
-    
+    "./textResources/a.txt",
+    "./textResources/ES/EsKeyWordsText02.json",
+    "./textResources/ES/EsDefaultSentences01.json",
+    "./textResources/EN/EnKeyWordsText02.json",
+    "./textResources/EN/EnDefaultSentences01.json"
 ]
 
 content = read_file(File[0])
 print(content)
-generateAudio(content,defautLanguange)
+generateAudio(content, defaultLanguage)
 
-languague = getVoice(defautLanguange)
-if languague == "castellano":
+language = getVoice(defaultLanguage)
+if language == "castellano":
     
-    generateAudio("Entendido te hablare en castellano a partir de ahora",defautLanguange)
-    defautLanguange = "es-ES"
-    keyWords =  read_word(File[1])
-    defaultSentences =  read_word(File[2])
+    generateAudio("Entendido, te hablaré en castellano a partir de ahora", defaultLanguage)
+    defaultLanguage = "es-ES"
+    keyWords = read_word(File[1])
+    defaultSentences = read_lines(File[2])
     print(keyWords,defaultSentences)
-    
 else:
-    generateAudio("Got it from now on i will speak to you in english",defautLanguange)
-    defautLanguange = "en-US"
-    keyWords =  read_word(File[3])
-    defaultSentences =  read_word(File[4])
+    
+    generateAudio("Entendido, I will speak to you in English from now on", defaultLanguage)
+    defaultLanguage = "en-US"
+    keyWords = read_word(File[3])
+    defaultSentences = read_lines(File[4])
     print(keyWords,defaultSentences)
 
 while True:
-    respond = getVoice(defautLanguange)
-    respond = respond.lower()
-    if "aurora" in respond:  
-        respond = respond.replace("aurora","")
-        if keyWords[0] in respond and keyWords[1] in respond or keyWords[2] in respond:
-            generateAudio("Claro dime que quieres que busque por ti",defautLanguange)
-        elif keyWords[3] in respond:
-            generateAudio("Claro que programa quieres abrir?",defautLanguange)
-        elif keyWords[4] in respond:
-            generateAudio("Claro ahora te digo, dejame pensar",defautLanguange)
-            textGenerated = getLLMText(respond,100)
-            generateAudio(textGenerated,defautLanguange)
-            generateAudio("¿Te ha sido util esta informacion? o quieres mas?",defautLanguange)
+    response = getVoice(defaultLanguage).lower()
+
+    if "aurora" in response:  
+        response = response.replace("aurora", "")
+        
+        if any(keyword in response for keyword in keyWords["onlineSearch"]):
+            generateAudio(defaultSentences["onlineSearch"][0], defaultLanguage)
+            
+        elif keyWords["openUtilities"][0] in response:
+            generateAudio(defaultSentences["openUtilities"][0], defaultLanguage)
+            
+        elif keyWords["LLMUtilities"][0] in response:
+            generateAudio(defaultSentences["LLMUtilities"][0], defaultLanguage)
+            textGenerated = getLLMText(response, 100)
+            generateAudio(textGenerated, defaultLanguage)
+            generateAudio(defaultSentences["moreInfo"][0], defaultLanguage)
             moreText = ""
-            while keyWords[5] not in moreText: 
-                moreText = getVoice(defautLanguange)
-                moreText = respond.lower()
-                if keyWords[6] in moreText or keyWords[7] in moreText or keyWords[8] in moreText:
-                    textGenerated = getLLMText(respond,200)
-                    generateAudio(textGenerated,defautLanguange)
+            
+            while all(keyword not in moreText for keyword in keyWords["moreInfo"]): 
+                moreText = getVoice(defaultLanguage).lower()
+                
+                if any(keyword in moreText for keyword in keyWords["moreInfo"]):
+                    textGenerated = getLLMText(response, 200)
+                    generateAudio(textGenerated, defaultLanguage)
                     
-        elif keyWords[9] in respond:
-            generateAudio("Claro que programa quieres que cierre?",defautLanguange)
-        elif keyWords[10] in respond and "alarma" in respond:
-            generateAudio("Claro puedo hacerte una alarma, cuando la quieres?",defautLanguange)
-        elif keyWords[11] in respond:
-            generateAudio("Buenas!!!",defautLanguange)
+        elif keyWords["closeUtilities"][0] in response:
+            generateAudio(defaultSentences["closeUtilities"][0], defaultLanguage)
+            
+        elif keyWords["putAlarm"][0] in response and "alarma" in response:
+            generateAudio(defaultSentences["putAlarm"][0], defaultLanguage)
+            
+        elif keyWords["greeting"][0] in response:
+            random_greeting = random.choice(defaultSentences["greeting"])
+            generateAudio(random_greeting, defaultLanguage)
+            
         else:
-            generateAudio("Lo siento no te he entendido",defautLanguange)
+            generateAudio(responses["notUnderstood"][0], defaultLanguage)
     else:
-        generateAudio("Lo siento no te he entendido",defautLanguange)
+        generateAudio(responses["notUnderstood"][0], defaultLanguage)

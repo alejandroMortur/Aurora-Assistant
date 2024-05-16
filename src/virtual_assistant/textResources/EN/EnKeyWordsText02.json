@@ -3,9 +3,9 @@
     "onlineSearch": ["search", "google", "search"],
     "openUtilities": ["opens"],
     "LLMUtilities": ["tell me"],
-    "LLMExtraInf": ["no", "I want", "more"],
+    "LLMExtraInf": ["no", "I want", "more", "more"],
     "closeUtilities": ["closes"],
     "putAlarm": ["put"],
-    "greeting": ["hello"]
+    "greeting": ["hello","greetings","good morning","how are you","what's up"]
   }
 }

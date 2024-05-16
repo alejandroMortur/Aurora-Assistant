@@ -6,6 +6,6 @@
     "LLMExtraInf": ["no", "quiero", "más", "mas"],
     "closeUtilities": ["cierra"],
     "putAlarm": ["pon"],
-    "greeting": ["hola"]
+    "greeting": ["hola","saludos","buenas","bon día","qué tal","qué pasa"]
   }
 }

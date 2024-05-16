@@ -6,7 +6,7 @@
     "moreInfo": ["¿Te ha sido útil esta información? ¿O quieres más?"],
     "closeUtilities": ["¿Claro qué programa quieres que cierre?"],
     "putAlarm": ["¿Claro puedo configurarte una alarma? ¿Cuándo la quieres?"],
-    "greeting": ["¡Buenas!!!","hola!!","Saludos!","Que pasa?","Saludos cordiales"],
+    "greeting": ["¡Buenas!!!","hola!!","Saludos!","Que pasa","Saludos cordiales"],
     "notUnderstood": ["Lo siento, no te he entendido"]
   }
 }

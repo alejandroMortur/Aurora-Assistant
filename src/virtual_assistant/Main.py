@@ -30,7 +30,7 @@ if language == "castellano":
     print(keyWords,defaultSentences)
 else:
     
-    generateAudio("Entendido, I will speak to you in English from now on", defaultLanguage)
+    generateAudio("Got it, I will speak to you in English from now on", defaultLanguage)
     defaultLanguage = "en-US"
     keyWords = read_word(File[3])
     defaultSentences = read_lines(File[4])
@@ -45,10 +45,10 @@ while True:
         if any(keyword in response for keyword in keyWords["onlineSearch"]):
             generateAudio(defaultSentences["onlineSearch"][0], defaultLanguage)
             
-        elif keyWords["openUtilities"][0] in response:
+        elif any(keyword in response for keyword in keyWords["openUtilities"]):
             generateAudio(defaultSentences["openUtilities"][0], defaultLanguage)
             
-        elif keyWords["LLMUtilities"][0] in response:
+        elif any(keyword in response for keyword in keyWords["LLMUtilities"]):
             generateAudio(defaultSentences["LLMUtilities"][0], defaultLanguage)
             textGenerated = getLLMText(response, 100)
             generateAudio(textGenerated, defaultLanguage)
@@ -62,17 +62,17 @@ while True:
                     textGenerated = getLLMText(response, 200)
                     generateAudio(textGenerated, defaultLanguage)
                     
-        elif keyWords["closeUtilities"][0] in response:
+        elif any(keyword in response for keyword in keyWords["closeUtilities"]):
             generateAudio(defaultSentences["closeUtilities"][0], defaultLanguage)
             
-        elif keyWords["putAlarm"][0] in response and "alarma" in response:
+        elif any(keyword in response for keyword in keyWords["putAlarm"]) and "alarma" in response:
             generateAudio(defaultSentences["putAlarm"][0], defaultLanguage)
             
-        elif keyWords["greeting"][0] in response:
+        elif any(keyword in response for keyword in keyWords["greeting"]):
             random_greeting = random.choice(defaultSentences["greeting"])
             generateAudio(random_greeting, defaultLanguage)
             
         else:
-            generateAudio(responses["notUnderstood"][0], defaultLanguage)
+            generateAudio(defaultSentences["notUnderstood"][0], defaultLanguage)
     else:
-        generateAudio(responses["notUnderstood"][0], defaultLanguage)
+        generateAudio(defaultSentences["notUnderstood"][0], defaultLanguage)

@@ -10,7 +10,7 @@ def generateAudio(text, language):
     tts = gTTS(text_to_generate, lang=language)
     
     # Save the generated audio as an mp3 file
-    tts.save("./generatedVoices/voice.mp3")
+    tts.save("../resources/Sounds/generatedVoices/voice.mp3")
     
     # Call the speak function to play the generated audio
     speak()

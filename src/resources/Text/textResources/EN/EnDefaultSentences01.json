@@ -1,6 +1,6 @@
 {
   "responses": {
-    "onlineSearch": ["Sure, tell me what you want me to search for you"],
+    "onlineSearch": ["Sure,let me search it"],
     "openUtilities": ["Sure what program you want to open?"],
     "LLMUtilities": ["Sure, I'll tell you now. Let me think"],
     "moreInfo": ["Was this information helpful to you? Or do you want more?"],

@@ -18,13 +18,17 @@ To install Aurora, follow these steps:
    ```bash
    git clone https://github.com/alejandroMortur/Aurora-Assistant.git
    ```
-2. Download LLM Studio an set down the model you want
+
+2. Install the dependences:
 
    ```bash
-   https://lmstudio.ai
+   pip install -r requirements.txt
    ```
+3. Download LLM Studio an set down the model you want
 
-3. Run this comand on your terminal to launch de asistant:
+   Visit [LM Studio](https://lmstudio.ai) to download LLM Studio and choose the model that best suits your needs.
+
+4. Run this comand on your terminal to launch de asistant:
 
    ```bash
    python .\Main.py

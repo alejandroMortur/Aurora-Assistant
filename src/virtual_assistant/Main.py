@@ -1,12 +1,19 @@
 import os 
 import sys
 import random
+from dotenv import load_dotenv
 from GenerateModule import generateAudio
 from MicHandler import getVoice
 from LLMModule import getLLMText
 from TextHandler import read_file, read_word, read_lines
 from PYFuncionModules.wikiModule import wiki_search
 from PYFuncionModules.alarmModule import start_alarm_thread, extract_time
+
+#load from .env file key_api for weather
+load_dotenv()
+apiWeather_Key = os.getenv('APIWEATHER_KEY')
+
+print(apiWeather_Key)
 
 #local variables
 defaultLanguage = "es-ES"

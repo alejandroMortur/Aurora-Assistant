@@ -5,15 +5,14 @@ from dotenv import load_dotenv
 from GenerateModule import generateAudio
 from MicHandler import getVoice
 from LLMModule import getLLMText
-from TextHandler import read_file, read_word, read_lines
+from TextHandler import read_file, read_word, read_lines,search_WeatherKeyword
 from PYFuncionModules.wikiModule import wiki_search
 from PYFuncionModules.alarmModule import start_alarm_thread, extract_time
+from PYFuncionModules.weatherModule import get_weather
 
 #load from .env file key_api for weather
 load_dotenv()
 apiWeather_Key = os.getenv('APIWEATHER_KEY')
-
-print(apiWeather_Key)
 
 #local variables
 defaultLanguage = "es-ES"
@@ -24,7 +23,8 @@ File = [
     "../resources/Text/textResources/ES/EsKeyWordsText02.json",
     "../resources/Text/textResources/ES/EsDefaultSentences01.json",
     "../resources/Text/textResources/EN/EnKeyWordsText02.json",
-    "../resources/Text/textResources/EN/EnDefaultSentences01.json"
+    "../resources/Text/textResources/EN/EnDefaultSentences01.json",
+    "../resources/Text/textResources/cities.json"
 ]
 
 content = read_file(File[0])
@@ -76,6 +76,24 @@ while True:
                 generateAudio("alarma configurada "+alarm_time, defaultLanguage)
               
             start_alarm_thread(alarm_time)
+          
+        #module for weather handler  
+        elif any(keyword in response for keyword in keyWords["wheaterUtilities"]):
+            
+            city = search_WeatherKeyword(response,File[5])#read the city from the json file
+            print(city)
+            start_date = "today" # You can change the start date
+            end_date = "today" # You can change the end date
+            api_key = os.getenv("APIWEATHER_KEY") # Load the API key from the .env file
+
+            if api_key:
+                respond = get_weather(city, api_key, defaultLanguage)
+                
+                if respond:
+                    generateAudio(respond, defaultLanguage)
+                else:
+                    print("Could not get time information.")
+
           
         #module for LLM(AI) handler                
         elif any(keyword in response for keyword in keyWords["LLMUtilities"]):

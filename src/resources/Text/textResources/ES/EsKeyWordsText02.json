@@ -84,6 +84,19 @@
       "planifica",
       "alarma"
     ],
+    "wheaterUtilities": [
+    "clima", 
+    "tiempo atmosférico", 
+    "pronóstico del tiempo", 
+    "temperatura", 
+    "condiciones climáticas", 
+    "previsión meteorológica", 
+    "información del tiempo", 
+    "estado del tiempo", 
+    "predicción meteorológica", 
+    "temperatura actual", 
+    "condiciones actuales"
+  ],
     "greeting": [
       "hola",
       "saludos",

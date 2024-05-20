@@ -30,7 +30,7 @@ To install Aurora, follow these steps:
 
 4. Gets your owns weather api key:
 
-   Visit [openweathermap.org](https://openweathermap.org) to get yours owns weather api key.
+   Visit [visualcrossing](https://www.visualcrossing.com) to get yours owns weather api key.
 
 5. Run this comand on your terminal to launch de asistant:
 

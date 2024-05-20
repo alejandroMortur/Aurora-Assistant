@@ -85,6 +85,19 @@
       "schedule",
       "alarm"
     ],
+    "wheaterUtilities": [
+      "climate",
+      "weather",
+      "weather forecast",
+      "temperature",
+      "weather conditions",
+      "weather forecast",
+      "weather information",
+      "state of the weather",
+      "weather forecast",
+      "actual temperature",
+      "actual conditions"
+    ],
     "greeting": [
       "hello",
       "regards",

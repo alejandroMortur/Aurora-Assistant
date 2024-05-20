@@ -27,6 +27,7 @@ File = [
     "../resources/Text/textResources/cities.json"
 ]
 
+#initial dialog load
 content = read_file(File[0])
 print(content)
 generateAudio(content, defaultLanguage)
@@ -58,13 +59,13 @@ while True:
     if "aurora" in response:  
         response = response.replace("aurora", "")
         
-        #module for onlineSearch
+        #module for onlineSearch (done) 
         if any(keyword in response for keyword in keyWords["onlineSearch"]):
             generateAudio(defaultSentences["onlineSearch"][0], defaultLanguage)
             respond = wiki_search(response,language,3)
             generateAudio(respond, defaultLanguage)
            
-        #module for AlarmHandler    
+        #module for AlarmHandler  (done) 
         elif any(keyword in response for keyword in keyWords["putAlarm"]) and "alarma" in response:
             generateAudio(defaultSentences["putAlarm"][0], defaultLanguage)
             response = getVoice(defaultLanguage).lower()
@@ -77,7 +78,7 @@ while True:
               
             start_alarm_thread(alarm_time)
           
-        #module for weather handler  
+        #module for weather handler  (done) 
         elif any(keyword in response for keyword in keyWords["wheaterUtilities"]):
             
             city = search_WeatherKeyword(response,File[5])#read the city from the json file
@@ -109,17 +110,20 @@ while True:
                 if any(keyword in moreText for keyword in keyWords["moreInfo"]):
                     textGenerated = getLLMText(response, 200)
                     generateAudio(textGenerated, defaultLanguage)
-                    
+               
+        #module for open programs     
         elif any(keyword in response for keyword in keyWords["openUtilities"]):
             generateAudio(defaultSentences["openUtilities"][0], defaultLanguage)
-                    
+                 
+        #module for close programs     
         elif any(keyword in response for keyword in keyWords["closeUtilities"]):
             generateAudio(defaultSentences["closeUtilities"][0], defaultLanguage)
                  
-        #module for greetings handler       
+        #module for greetings handler  (done)     
         elif any(keyword in response for keyword in keyWords["greeting"]):
             random_greeting = random.choice(defaultSentences["greeting"])
             generateAudio(random_greeting, defaultLanguage)
-            
+        
+        #module for nonUnderstood voice isue (done)  
         else:
             generateAudio(defaultSentences["notUnderstood"][0], defaultLanguage)

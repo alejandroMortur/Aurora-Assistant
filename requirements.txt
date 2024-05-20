@@ -1,7 +1,7 @@
-#dependences list
 gTTS==2.5.1
 playsound==1.2.2
 SpeechRecognition==3.10.3
-pyttsx3==2.90pip 
-simpleaudio
+pyttsx3==2.90
+simpleaudio==1.0.4
 python-dotenv==0.21.0
+requests==2.28.0

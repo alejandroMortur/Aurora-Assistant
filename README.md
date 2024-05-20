@@ -28,7 +28,11 @@ To install Aurora, follow these steps:
 
    Visit [LM Studio](https://lmstudio.ai) to download LLM Studio.
 
-4. Run this comand on your terminal to launch de asistant:
+4. Gets your owns weather api key:
+
+   Visit [openweathermap.org](https://openweathermap.org) to get yours owns weather api key.
+
+5. Run this comand on your terminal to launch de asistant:
 
    ```bash
    python .\Main.py

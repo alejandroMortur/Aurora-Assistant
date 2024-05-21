@@ -1,6 +1,7 @@
 import os 
 import sys
 import random
+import re
 from dotenv import load_dotenv
 from GenerateModule import generateAudio
 from MicHandler import getVoice
@@ -9,6 +10,7 @@ from TextHandler import read_file, read_word, read_lines,search_WeatherKeyword
 from PYFuncionModules.wikiModule import wiki_search
 from PYFuncionModules.alarmModule import start_alarm_thread, extract_time
 from PYFuncionModules.weatherModule import get_weather
+from PYFuncionModules.programsHandlerModule import open_program, close_program
 
 #load from .env file key_api for weather
 load_dotenv()
@@ -113,11 +115,23 @@ while True:
                
         #module for open programs     
         elif any(keyword in response for keyword in keyWords["openUtilities"]):
+            
             generateAudio(defaultSentences["openUtilities"][0], defaultLanguage)
+      
+            words = response.split()
+            program_name = words[-1]
+      
+            open_program(program_name)
                  
         #module for close programs     
         elif any(keyword in response for keyword in keyWords["closeUtilities"]):
+            
             generateAudio(defaultSentences["closeUtilities"][0], defaultLanguage)
+            
+            words = response.split()
+            program_name = words[-1]
+            
+            close_program(program_name)
                  
         #module for greetings handler  (done)     
         elif any(keyword in response for keyword in keyWords["greeting"]):

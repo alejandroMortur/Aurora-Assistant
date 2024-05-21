@@ -25,11 +25,11 @@
       "inicia",
       "ejecuta",
       "activa",
-      "abrir",
-      "arrancar",
-      "lanzar",
-      "poner en marcha",
-      "comenzar"
+      "abre",
+      "arranca",
+      "lanza",
+      "pon en marcha",
+      "comienza"
     ],
     "LLMUtilities": [
       "dime",

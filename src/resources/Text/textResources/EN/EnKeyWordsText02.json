@@ -21,15 +21,15 @@
       "web browser"
     ],
     "openUtilities": [
-      "open",
+      "opens",
       "start",
-      "run",
-      "activate",
-      "open",
-      "boot",
-      "launch",
+      "execute",
+      "active",
+      "opens",
+      "Starts",
+      "lance",
       "start up",
-      "begin"
+      "starts"
     ],
     "LLMUtilities": [
       "tell me",

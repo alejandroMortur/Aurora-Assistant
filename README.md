@@ -37,3 +37,5 @@ To install Aurora, follow these steps:
    ```bash
    python .\Main.py
    ```
+
+_Some sentences and data of the asistant has been get it from code.google.com/p/ortograph_

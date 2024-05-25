@@ -18,7 +18,17 @@
       "navega",
       "buscador",
       "motor de búsqueda",
-      "explorador web"
+      "explorador web",      
+      "dime",
+      "habla",
+      "explica",
+      "comunica",
+      "informa",
+      "indica",
+      "responde",
+      "contestar",
+      "decir",
+      "expresar"
     ],
     "openUtilities": [
       "abre",
@@ -30,18 +40,6 @@
       "lanza",
       "pon en marcha",
       "comienza"
-    ],
-    "LLMUtilities": [
-      "dime",
-      "habla",
-      "explica",
-      "comunica",
-      "informa",
-      "indica",
-      "responde",
-      "contestar",
-      "decir",
-      "expresar"
     ],
     "LLMExtraInf": [
       "no",

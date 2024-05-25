@@ -20,7 +20,9 @@ def open_program(program_name):
     if program_paths:
         for program_path in program_paths:
             # Open each program in a separate thread
+            print("---------------------------")
             print(f'{program_name} found. Opening...')
+            print("---------------------------")
             thread = threading.Thread(target=subprocess.Popen, args=([os.path.join(os.environ['SystemRoot'], 'System32', program_path)],))
             thread.start()
     else:
@@ -34,7 +36,9 @@ def close_program(program_name):
         print(f'{program_name} found. Closing...')
         subprocess.run(['taskkill', '/f', '/im', program_name])
     else:
+        print("---------------------------")
         print(f'{program_name} not found or already closed.')
+        print("---------------------------")
 
 def is_program_running(program_name):
     # Convert program name to lowercase for case-insensitive comparison

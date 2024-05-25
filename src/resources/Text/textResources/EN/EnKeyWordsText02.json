@@ -18,7 +18,17 @@
       "browse",
       "search engine",
       "search engine",
-      "web browser"
+      "web browser",
+      "tell me",
+      "speak",
+      "explain",
+      "communicate",
+      "inform",
+      "indicate",
+      "respond",
+      "answer",
+      "say",
+      "express"
     ],
     "openUtilities": [
       "opens",
@@ -30,18 +40,6 @@
       "lance",
       "start up",
       "starts"
-    ],
-    "LLMUtilities": [
-      "tell me",
-      "speak",
-      "explain",
-      "communicate",
-      "inform",
-      "indicate",
-      "respond",
-      "answer",
-      "say",
-      "express"
     ],
     "LLMExtraInf": [
       "no",

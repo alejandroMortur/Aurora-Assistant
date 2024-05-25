@@ -2,7 +2,6 @@
   "responses": {
     "onlineSearch": ["Sure,let me search it"],
     "openUtilities": ["Sure let me open the program"],
-    "LLMUtilities": ["Sure, I'll tell you now. Let me think"],
     "moreInfo": ["Was this information helpful to you? Or do you want more?"],
     "closeUtilities": ["Sure let me close the program"],
     "putAlarm": ["Sure, I can set an alarm for you? When do you want it?"],

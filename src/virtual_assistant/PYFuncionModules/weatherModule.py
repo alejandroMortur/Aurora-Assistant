@@ -30,12 +30,16 @@ def get_weather(city,api_key,defaultLanguage):
                 
                 # Generate the phrase with the current weather data
                 phrase = f"At this moment in {current_weather['city']}, it is {current_weather['temperature']} degrees Celsius, with a humidity of {current_weather['humidity']}% and a wind speed of {current_weather['wind']} km/h."
+                print("---------------------------")
                 print(phrase)
+                print("---------------------------")
                 
             elif defaultLanguage == "es-ES": 
                 # Generate the phrase with the current weather data
                 phrase = f"En este momento en {current_weather['city']}, hay {current_weather['temperature']} grados Celsius, con una humedad del {current_weather['humidity']}% y una velocidad del viento de {current_weather['wind']} km/h."
+                print("---------------------------")
                 print(phrase)
+                print("---------------------------")
             
             return phrase
         else:

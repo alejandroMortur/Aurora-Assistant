@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from GenerateModule import generateAudio
 from MicHandler import getVoice
 from LLMModule import getLLMText
-from TextHandler import read_file, read_word, read_lines,search_WeatherKeyword
+from TextHandler import read_file, read_word, read_lines,search_WeatherKeyword,  get_country_from_city
 from PYFuncionModules.wikiModule import wiki_search
 from PYFuncionModules.alarmModule import start_alarm_thread, extract_time
 from PYFuncionModules.weatherModule import get_weather
@@ -85,6 +85,8 @@ while True:
             
             city = search_WeatherKeyword(response,File[5])#read the city from the json file
             print(city)
+            if city == None:
+                generateAudio("Lo siento pero no tengo soporte para la localidad mencionada", defaultLanguage)
             start_date = "today" # You can change the start date
             end_date = "today" # You can change the end date
             api_key = os.getenv("APIWEATHER_KEY") # Load the API key from the .env file
@@ -96,24 +98,8 @@ while True:
                     generateAudio(respond, defaultLanguage)
                 else:
                     print("Could not get time information.")
-
-          
-        #module for LLM(AI) handler                
-        elif any(keyword in response for keyword in keyWords["LLMUtilities"]):
-            generateAudio(defaultSentences["LLMUtilities"][0], defaultLanguage)
-            textGenerated = getLLMText(response, 100)
-            generateAudio(textGenerated, defaultLanguage)
-            generateAudio(defaultSentences["moreInfo"][0], defaultLanguage)
-            moreText = ""
-            
-            while all(keyword not in moreText for keyword in keyWords["moreInfo"]): 
-                moreText = getVoice(defaultLanguage).lower()
-                
-                if any(keyword in moreText for keyword in keyWords["moreInfo"]):
-                    textGenerated = getLLMText(response, 200)
-                    generateAudio(textGenerated, defaultLanguage)
-               
-        #module for open programs     
+        
+        #module for open programs (done)    
         elif any(keyword in response for keyword in keyWords["openUtilities"]):
             
             generateAudio(defaultSentences["openUtilities"][0], defaultLanguage)
@@ -123,7 +109,7 @@ while True:
       
             open_program(program_name)
                  
-        #module for close programs     
+        #module for close programs (done)
         elif any(keyword in response for keyword in keyWords["closeUtilities"]):
             
             generateAudio(defaultSentences["closeUtilities"][0], defaultLanguage)
@@ -137,7 +123,12 @@ while True:
         elif any(keyword in response for keyword in keyWords["greeting"]):
             random_greeting = random.choice(defaultSentences["greeting"])
             generateAudio(random_greeting, defaultLanguage)
+            
+        #module of conversation with LLM (done)
+        else: 
+            textGenerated = getLLMText(response, 100,defaultLanguage)
+            generateAudio(textGenerated, defaultLanguage)
         
-        #module for nonUnderstood voice isue (done)  
-        else:
-            generateAudio(defaultSentences["notUnderstood"][0], defaultLanguage)
+    #module for nonUnderstood voice isue (done)  
+    else:
+        generateAudio(defaultSentences["notUnderstood"][0], defaultLanguage)

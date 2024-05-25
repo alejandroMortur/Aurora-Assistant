@@ -77,3 +77,16 @@ def search_WeatherKeyword(input_text, keyword_data):
     
     # If no keyword found
     return None
+
+def get_country_from_city(city_name, cities_data):
+    # Load cities data from JSON file
+    with open(cities_data, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+    
+    # Search for city name in user input
+    for city_info in data:
+        if city_info.get("name", "").lower() == city_name.lower():
+            return city_info.get("country_name")
+    
+    # If city not found
+    return None

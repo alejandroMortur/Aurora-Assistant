@@ -21,8 +21,12 @@ def getVoice(language):
             return text
             
         except sr.UnknownValueError:
+            print("---------------------------")
             print("Sorry, I didn't understand what you said.")
+            print("---------------------------")
             generateAudio("Sorry, I didn't understand.")
         except sr.RequestError as e:
+            print("---------------------------")
             print("Could not complete the request; {0}".format(e))
+            print("---------------------------")
             generateAudio("An error occurred while processing your request.")

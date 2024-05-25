@@ -26,7 +26,9 @@ def open_program(program_name):
             thread = threading.Thread(target=subprocess.Popen, args=([os.path.join(os.environ['SystemRoot'], 'System32', program_path)],))
             thread.start()
     else:
+        print("---------------------------")
         print(f'{program_name} not found.')
+        print("---------------------------")
 
 def close_program(program_name):
     # Ensure program name has .exe extension

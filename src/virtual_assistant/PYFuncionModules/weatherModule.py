@@ -50,10 +50,14 @@ def get_weather(city,api_key,defaultLanguage):
         try:
             # Attempt to print the response content
             error_data = response.json()
+            print("---------------------------")
             print("Error content:")
+            print("---------------------------")
             print(error_data)
         except:
             # If it cannot be loaded as JSON, print the content as text
+            print("---------------------------")
             print("Error content:")
+            print("---------------------------")
             print(response.text)
         return None

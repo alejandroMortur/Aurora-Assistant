@@ -15,12 +15,13 @@ from PYFuncionModules.programsHandlerModule import open_program, close_program
 #load from .env file key_api for weather
 load_dotenv()
 apiWeather_Key = os.getenv('APIWEATHER_KEY')
+apiNews_Key = os.getenv('APINEWS')
 
 #local variables
 defaultLanguage = "en-US"
 languague = "es"
 location = []#array of locatión data of the user
-newslock = False
+newslock = False#Bool value for non location acepted by the user
 
 File = [
     "../resources/Text/textResources/a.txt",

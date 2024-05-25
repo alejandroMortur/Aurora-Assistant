@@ -32,10 +32,14 @@ def get_country_from_location(location):
                 return None
         else:
             # Si la solicitud falla, muestra un mensaje de error
+            print("---------------------------")
             print("Error retrieving location information:", response.status_code)
+            print("---------------------------")
             return None
     except Exception as e:
+        print("---------------------------")
         print("An error occurred:", e)
+        print("---------------------------")
         return None
 
 def get_top_headlines(api_key, location):

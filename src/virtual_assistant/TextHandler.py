@@ -1,4 +1,6 @@
 import json
+import re
+from unidecode import unidecode
 
 #code block for read initial dialog
 def read_file(file_path):
@@ -39,7 +41,7 @@ def read_word(file_path):
 
 import json
 
-#code block for reed dialog setences
+#code block for read dialog setences
 def read_lines(file_path):
     responses = {}
 
@@ -90,3 +92,25 @@ def get_country_from_city(city_name, cities_data):
     
     # If city not found
     return None
+
+#Get localitation module
+def find_city_and_state_in_phrase(phrase, cities_data):
+    # Load cities data from JSON file
+    with open(cities_data, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+    
+    # Normalize the phrase to avoid case sensitivity and accent sensitivity issues
+    normalized_phrase = unidecode(phrase.lower())
+    
+    # Search for each city and state in the phrase
+    for city_info in data:
+        city_name = unidecode(city_info.get("name", "").lower())
+        state_name = unidecode(city_info.get("state_name", "").lower())
+        
+        # Check if both city name and state name are in the phrase
+        if re.search(r'\b' + re.escape(city_name) + r'\b', normalized_phrase) and \
+           re.search(r'\b' + re.escape(state_name) + r'\b', normalized_phrase):
+            return [city_info["name"], city_info["state_name"], city_info.get("country_name")]
+    
+    # If no city and state are found
+    return []

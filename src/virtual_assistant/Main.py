@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from GenerateModule import generateAudio
 from MicHandler import getVoice
 from LLMModule import getLLMText
-from TextHandler import read_file, read_word, read_lines,search_WeatherKeyword,  get_country_from_city
+from TextHandler import read_file, read_word, read_lines,search_WeatherKeyword,  get_country_from_city, find_city_and_state_in_phrase
 from PYFuncionModules.wikiModule import wiki_search
 from PYFuncionModules.alarmModule import start_alarm_thread, extract_time
 from PYFuncionModules.weatherModule import get_weather
@@ -19,13 +19,17 @@ apiWeather_Key = os.getenv('APIWEATHER_KEY')
 #local variables
 defaultLanguage = "en-US"
 languague = "es"
+location = []#array of locatión data of the user
+newslock = False
 
 File = [
     "../resources/Text/textResources/a.txt",
     "../resources/Text/textResources/ES/EsKeyWordsText02.json",
     "../resources/Text/textResources/ES/EsDefaultSentences01.json",
+    "../resources/Text/textResources/ES/EsDefaultLoc03.txt",
     "../resources/Text/textResources/EN/EnKeyWordsText02.json",
     "../resources/Text/textResources/EN/EnDefaultSentences01.json",
+    "../resources/Text/textResources/ES/EnDefaultLoc03.txt",
     "../resources/Text/textResources/cities.json"
 ]
 
@@ -52,16 +56,53 @@ if "castellano" in language or "Castellano" in language:
     print("---------------------------")
     print("Loaded data: " + str(keyWords) + "| " + str(defaultSentences))
     print("---------------------------")
+    
+#default localication set spanish
+    content = read_file(File[3])
+    print("---------------------------")
+    print(content)
+    print("---------------------------")
+    generateAudio(content, defaultLanguage)
+    region = getVoice(defaultLanguage)
+    while region == None:
+        region = getVoice(defaultLanguage)
+        
+    if "no" in region or "No" in region:
+        generateAudio("Entendido el sistema de noticias queda deshabilitado", defaultLanguage)
+        newslock = True
+    else:
+        location = find_city_and_state_in_phrase(region,File[7])
+        generateAudio("Entendido, a si que vives en "+str(location[0])+", en el estado "+str(location[1])+", "+str(location[2]), defaultLanguage)
+
 elif "Inglés" in language or "English" in language:
     
     defaultLanguage = "en-US"
     generateAudio("Got it, I will speak to you in English from now on", defaultLanguage)
     language = "en"
-    keyWords = read_word(File[3])
-    defaultSentences = read_lines(File[4])
+    keyWords = read_word(File[4])
+    defaultSentences = read_lines(File[5])
     print("---------------------------")
     print("Loaded data: " + str(keyWords) + "| " + str(defaultSentences))
     print("---------------------------")
+  
+#default localication set english
+    content = read_file(File[6])
+    print("---------------------------")
+    print(content)
+    print("---------------------------")
+    generateAudio(content, defaultLanguage)
+    region = getVoice(defaultLanguage)
+    while region == None:
+        region = getVoice(defaultLanguage)
+        
+    if "no" in region or "No" in region:
+        generateAudio("Understood, the news system is disabled", defaultLanguage)
+        newslock = True
+    else:
+        location = find_city_and_state_in_phrase(region,File[7])
+        generateAudio("Got it soo you live in "+str(location[0])+", in the state "+str(location[1])+", "+str(location[2]), defaultLanguage)
+
+print("location of user: "+str(location[0])+", en el estado "+str(location[1])+", "+str(location[2]))
 
 #---------------------------------------------------------------------------------------------------
 
@@ -102,7 +143,7 @@ while True:
             print("------------------")
             print("Weather system:")
             print("------------------")
-            city = search_WeatherKeyword(response,File[5])#read the city from the json file
+            city = search_WeatherKeyword(response,File[7])#read the city from the json file
             print(city)
             if city == None:
                 generateAudio("Lo siento pero no tengo soporte para la localidad mencionada", defaultLanguage)

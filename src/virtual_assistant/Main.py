@@ -17,11 +17,11 @@ load_dotenv()
 apiWeather_Key = os.getenv('APIWEATHER_KEY')
 
 #local variables
-defaultLanguage = "es-ES"
+defaultLanguage = "en-US"
 languague = "es"
 
 File = [
-    "../resources/Text/textResources/a.txt",
+    "../resources/Text/textResources/IntroText01.txt",
     "../resources/Text/textResources/ES/EsKeyWordsText02.json",
     "../resources/Text/textResources/ES/EsDefaultSentences01.json",
     "../resources/Text/textResources/EN/EnKeyWordsText02.json",
@@ -31,29 +31,35 @@ File = [
 
 #initial dialog load
 content = read_file(File[0])
+print("---------------------------")
 print(content)
+print("---------------------------")
 generateAudio(content, defaultLanguage)
 
 language = getVoice(defaultLanguage)
 
 #-----------------------------setup on first run code --------------------------------------------
 #default language set 
-if language == "castellano":
+if language == "castellano" or language == "Castellano":
     
-    generateAudio("Entendido, te hablaré en castellano a partir de ahora", defaultLanguage)
     defaultLanguage = "es-ES"
+    generateAudio("Entendido, te hablaré en castellano a partir de ahora", defaultLanguage)
     language = "es"
     keyWords = read_word(File[1])
     defaultSentences = read_lines(File[2])
-    print(keyWords,defaultSentences)
-elif language == "inglés" or language == "english":
+    print("---------------------------")
+    print("Loaded data: " + str(keyWords) + "| " + str(defaultSentences))
+    print("---------------------------")
+elif language == "Inglés" or language == "English":
     
-    generateAudio("Got it, I will speak to you in English from now on", defaultLanguage)
     defaultLanguage = "en-US"
+    generateAudio("Got it, I will speak to you in English from now on", defaultLanguage)
     language = "en"
     keyWords = read_word(File[3])
     defaultSentences = read_lines(File[4])
-    print(keyWords,defaultSentences)
+    print("---------------------------")
+    print("Loaded data: " + str(keyWords) + "| " + str(defaultSentences))
+    print("---------------------------")
     
 #---------------------------------------------------------------------------------------------------
 

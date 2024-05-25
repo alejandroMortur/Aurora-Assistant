@@ -6,7 +6,9 @@ def getVoice(language):
 
     # List available audio input devices
     # Replace 1 with the corresponding index of your microphone if it's not the default one
+    print("---------------------------")
     print(sr.Microphone.list_microphone_names())
+    print("---------------------------")
     
     with sr.Microphone() as source:
         # Adjust for ambient noise

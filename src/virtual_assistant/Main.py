@@ -21,7 +21,7 @@ defaultLanguage = "en-US"
 languague = "es"
 
 File = [
-    "../resources/Text/textResources/IntroText01.txt",
+    "../resources/Text/textResources/a.txt",
     "../resources/Text/textResources/ES/EsKeyWordsText02.json",
     "../resources/Text/textResources/ES/EsDefaultSentences01.json",
     "../resources/Text/textResources/EN/EnKeyWordsText02.json",
@@ -37,10 +37,12 @@ print("---------------------------")
 generateAudio(content, defaultLanguage)
 
 language = getVoice(defaultLanguage)
+while language == None:
+    language = getVoice(defaultLanguage)
 
 #-----------------------------setup on first run code --------------------------------------------
 #default language set 
-if language == "castellano" or language == "Castellano":
+if "castellano" in language or "Castellano" in language:
     
     defaultLanguage = "es-ES"
     generateAudio("Entendido, te hablaré en castellano a partir de ahora", defaultLanguage)
@@ -50,7 +52,7 @@ if language == "castellano" or language == "Castellano":
     print("---------------------------")
     print("Loaded data: " + str(keyWords) + "| " + str(defaultSentences))
     print("---------------------------")
-elif language == "Inglés" or language == "English":
+elif "Inglés" in language or "English" in language:
     
     defaultLanguage = "en-US"
     generateAudio("Got it, I will speak to you in English from now on", defaultLanguage)
@@ -60,24 +62,30 @@ elif language == "Inglés" or language == "English":
     print("---------------------------")
     print("Loaded data: " + str(keyWords) + "| " + str(defaultSentences))
     print("---------------------------")
-    
+
 #---------------------------------------------------------------------------------------------------
 
 #while loop for read responses
 while True:
     response = getVoice(defaultLanguage).lower()
 
-    if "aurora" in response:  
+    if "aurora" in response or "Aurora" in response:  
         response = response.replace("aurora", "")
         
         #module for onlineSearch (done) 
         if any(keyword in response for keyword in keyWords["onlineSearch"]):
+            print("------------------")
+            print("Online search:")
+            print("------------------")
             generateAudio(defaultSentences["onlineSearch"][0], defaultLanguage)
             respond = wiki_search(response,language,3)
             generateAudio(respond, defaultLanguage)
            
         #module for AlarmHandler  (done) 
         elif any(keyword in response for keyword in keyWords["putAlarm"]) and "alarma" in response:
+            print("------------------")
+            print("Alarm system:")
+            print("------------------")
             generateAudio(defaultSentences["putAlarm"][0], defaultLanguage)
             response = getVoice(defaultLanguage).lower()
             alarm_time  = extract_time(response)
@@ -91,25 +99,31 @@ while True:
           
         #module for weather handler  (done) 
         elif any(keyword in response for keyword in keyWords["wheaterUtilities"]):
-            
+            print("------------------")
+            print("Weather system:")
+            print("------------------")
             city = search_WeatherKeyword(response,File[5])#read the city from the json file
             print(city)
             if city == None:
                 generateAudio("Lo siento pero no tengo soporte para la localidad mencionada", defaultLanguage)
-            start_date = "today" # You can change the start date
-            end_date = "today" # You can change the end date
-            api_key = os.getenv("APIWEATHER_KEY") # Load the API key from the .env file
+            else:
+                start_date = "today" # You can change the start date
+                end_date = "today" # You can change the end date
+                api_key = os.getenv("APIWEATHER_KEY") # Load the API key from the .env file
 
-            if api_key:
-                respond = get_weather(city, api_key, defaultLanguage)
-                
-                if respond:
-                    generateAudio(respond, defaultLanguage)
-                else:
-                    print("Could not get time information.")
+                if api_key:
+                    respond = get_weather(city, api_key, defaultLanguage)
+                    
+                    if respond:
+                        generateAudio(respond, defaultLanguage)
+                    else:
+                        print("Could not get time information.")
         
         #module for open programs (done)    
         elif any(keyword in response for keyword in keyWords["openUtilities"]):
+            print("------------------")
+            print("Open program system:")
+            print("------------------")
             
             generateAudio(defaultSentences["openUtilities"][0], defaultLanguage)
       
@@ -120,6 +134,9 @@ while True:
                  
         #module for close programs (done)
         elif any(keyword in response for keyword in keyWords["closeUtilities"]):
+            print("------------------")
+            print("Close program system:")
+            print("------------------")
             
             generateAudio(defaultSentences["closeUtilities"][0], defaultLanguage)
             
@@ -130,11 +147,17 @@ while True:
                  
         #module for greetings handler  (done)     
         elif any(keyword in response for keyword in keyWords["greeting"]):
+            print("------------------")
+            print("Greetings system:")
+            print("------------------")
             random_greeting = random.choice(defaultSentences["greeting"])
             generateAudio(random_greeting, defaultLanguage)
             
         #module of conversation with LLM (done)
         else: 
+            print("------------------")
+            print("LLM system:")
+            print("------------------")
             textGenerated = getLLMText(response, 100,defaultLanguage)
             generateAudio(textGenerated, defaultLanguage)
         

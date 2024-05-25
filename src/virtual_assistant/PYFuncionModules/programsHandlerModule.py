@@ -33,7 +33,9 @@ def close_program(program_name):
     program_name = program_name.lower() + '.exe'
     if is_program_running(program_name):
         # Close the program if it is running
+        print("---------------------------")
         print(f'{program_name} found. Closing...')
+        print("---------------------------")
         subprocess.run(['taskkill', '/f', '/im', program_name])
     else:
         print("---------------------------")

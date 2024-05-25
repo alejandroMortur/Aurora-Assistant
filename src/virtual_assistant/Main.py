@@ -36,6 +36,7 @@ generateAudio(content, defaultLanguage)
 
 language = getVoice(defaultLanguage)
 
+#-----------------------------setup on first run code --------------------------------------------
 #default language set 
 if language == "castellano":
     
@@ -45,7 +46,7 @@ if language == "castellano":
     keyWords = read_word(File[1])
     defaultSentences = read_lines(File[2])
     print(keyWords,defaultSentences)
-else:
+elif language == "inglés" or language == "english":
     
     generateAudio("Got it, I will speak to you in English from now on", defaultLanguage)
     defaultLanguage = "en-US"
@@ -53,6 +54,8 @@ else:
     keyWords = read_word(File[3])
     defaultSentences = read_lines(File[4])
     print(keyWords,defaultSentences)
+    
+#---------------------------------------------------------------------------------------------------
 
 #while loop for read responses
 while True:

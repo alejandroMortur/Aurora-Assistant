@@ -14,8 +14,8 @@ from PYFuncionModules.programsHandlerModule import open_program, close_program
 
 #load from .env file key_api for weather
 load_dotenv()
-apiWeather_Key = os.getenv('APIWEATHER_KEY')
-apiNews_Key = os.getenv('APINEWS')
+api_key = os.getenv("APIWEATHER_KEY") # Load the API key from the .env file
+apiNews_Key = os.getenv('APINEWS')# Load the API key from the .env file
 
 #local variables
 defaultLanguage = "en-US"
@@ -151,7 +151,6 @@ while True:
             else:
                 start_date = "today" # You can change the start date
                 end_date = "today" # You can change the end date
-                api_key = os.getenv("APIWEATHER_KEY") # Load the API key from the .env file
 
                 if api_key:
                     respond = get_weather(city, api_key, defaultLanguage)

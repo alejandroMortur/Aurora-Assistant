@@ -1,3 +1,5 @@
 Well now, to offer you a personalized experience and provide you with relevant information, we need to know your location. This will allow us, for example, to offer you news and updates specific to your area.
 
 If you prefer not to provide this information, please note that some features, such as news search will dont be able too use
+
+Knowing this then, do you want to tell me your location then?

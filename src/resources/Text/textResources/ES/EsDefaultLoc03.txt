@@ -1,3 +1,5 @@
 Genial!,ahora para ofrecerte una experiencia personalizada y proporcionarte informacion relevante, necesitamos saber tu localidad. Esto nos permitira, por ejemplo, ofrecerte noticias y actualizaciones especificas de tu area.
 
-Si prefieres no proporcionar esta informacion, ten en cuenta que algunas funciones, como la busqueda de noticias quedaran deshabilitadas
+Si prefieres no proporcionar esta informacion, ten en cuenta que algunas funciones, como la busqueda de noticias quedaran deshabilitadas.
+
+Sabiendo esto entonces, Quieres decirme tu localidad entonces?

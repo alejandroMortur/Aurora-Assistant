@@ -11,6 +11,7 @@ from PYFuncionModules.wikiModule import wiki_search
 from PYFuncionModules.alarmModule import start_alarm_thread, extract_time
 from PYFuncionModules.weatherModule import get_weather
 from PYFuncionModules.programsHandlerModule import open_program, close_program
+from PYFuncionModules.newsModule import get_news_today
 
 #load from .env file key_api for weather
 load_dotenv()
@@ -57,7 +58,7 @@ if "castellano" in language or "Castellano" in language:
     print("---------------------------")
     print("Loaded data: " + str(keyWords) + "| " + str(defaultSentences))
     print("---------------------------")
-    
+ 
 #default localication set spanish
     content = read_file(File[3])
     print("---------------------------")
@@ -69,11 +70,12 @@ if "castellano" in language or "Castellano" in language:
         region = getVoice(defaultLanguage)
         
     if "no" in region or "No" in region:
-        generateAudio("Entendido el sistema de noticias queda deshabilitado", defaultLanguage)
+        generateAudio("Entendido, el sistema de noticias queda deshabilitado", defaultLanguage)
         newslock = True
     else:
         location = find_city_and_state_in_phrase(region,File[7])
         generateAudio("Entendido, a si que vives en "+str(location[0])+", en el estado "+str(location[1])+", "+str(location[2]), defaultLanguage)
+        print("location of user: "+str(location[0])+", en el estado "+str(location[1])+", "+str(location[2]))
 
 elif "Inglés" in language or "English" in language:
     
@@ -97,15 +99,16 @@ elif "Inglés" in language or "English" in language:
         region = getVoice(defaultLanguage)
         
     if "no" in region or "No" in region:
-        generateAudio("Understood, the news system is disabled", defaultLanguage)
+        generateAudio("Understood, the news system is disabled then", defaultLanguage)
         newslock = True
     else:
         location = find_city_and_state_in_phrase(region,File[7])
         generateAudio("Got it soo you live in "+str(location[0])+", in the state "+str(location[1])+", "+str(location[2]), defaultLanguage)
-
-print("location of user: "+str(location[0])+", en el estado "+str(location[1])+", "+str(location[2]))
+        print("location of user: "+str(location[0])+", en el estado "+str(location[1])+", "+str(location[2]))
 
 #---------------------------------------------------------------------------------------------------
+
+print(keyWords)   
 
 #while loop for read responses
 while True:
@@ -114,8 +117,26 @@ while True:
     if "aurora" in response or "Aurora" in response:  
         response = response.replace("aurora", "")
         
+        #module for news handler  (done)     
+        if any(keyword in response for keyword in keyWords["newsSearch"]) and newslock == False:
+            print("------------------")
+            print("News system:")
+            print("------------------")
+            
+            #news = getVoice(defaultLanguage)
+
+            if not api_key:
+                print("Error: API key is not configured. Make sure the .env file contains the correct key.")
+            else:
+                query = "España"
+                page_size = 7
+                news_by_query = get_news_today(apiNews_Key, query,languague,page_size)
+                print("Noticias por consulta en español:")
+                for news in news_by_query:
+                    print(news)
+                print("-----------------------------------------")
         #module for onlineSearch (done) 
-        if any(keyword in response for keyword in keyWords["onlineSearch"]):
+        elif any(keyword in response for keyword in keyWords["onlineSearch"]):
             print("------------------")
             print("Online search:")
             print("------------------")
@@ -193,7 +214,7 @@ while True:
             print("------------------")
             random_greeting = random.choice(defaultSentences["greeting"])
             generateAudio(random_greeting, defaultLanguage)
-            
+                        
         #module of conversation with LLM (done)
         else: 
             print("------------------")

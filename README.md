@@ -30,8 +30,11 @@ To install Aurora, follow these steps:
 4. Gets your owns weather api key:
 
    Visit [visualcrossing](https://www.visualcrossing.com) to get yours owns weather api key.
+5. Gets your owns new api key:
 
-5. Run this comand on your terminal to launch de asistant:
+   Visit [newsapi](https://newsapi.org) to get yours owns news api key.
+
+6. Run this comand on your terminal to launch de asistant:
 
    ```bash
    python .\Main.py

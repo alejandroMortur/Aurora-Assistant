@@ -41,23 +41,23 @@ def get_news_today(api_key, query, language,page_size):
                     # Iterate over each article and add it to the news list
                     for article in data['articles']:
                         news_list.append({
-                            "Título": article['title'],
-                            "Descripción": article.get('description', 'Descripción no disponible'),
-                            "Contenido": article.get('content', 'Contenido no disponible'),
-                            "URL": article['url'],
-                            "Fuente": article['source']['name'],
-                            "Fecha de publicación": article['publishedAt']
+                            "title": article['title'],
+                            "description": article.get('description', 'Descripción no disponible'),
+                            "content": article.get('content', 'Contenido no disponible'),
+                            "url": article['url'],
+                            "source": article['source']['name'],
+                            "publishedAt": article['publishedAt']
                         })
                 else:
-                    print("No se encontraron titulares.")
+                    print("No headlines found.")
             else:
-                print("Error en la respuesta de la API:", data.get('message', 'No se proporcionó mensaje de error.'))
+                print("Error in API response:", data.get('message', 'No error message provided.'))
         else:
-            print("Error al realizar la solicitud:", response.status_code)
+            print("Error when making the request:", response.status_code)
         
         return news_list
         
     except Exception as e:
-        print("Ocurrió un error:", e)
+        print("An error occurred:", e)
         return []
 

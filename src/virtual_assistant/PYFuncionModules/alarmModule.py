@@ -20,7 +20,7 @@ def set_alarm(alarm_time):
         current_time = datetime.datetime.now().time()
         if current_time >= alarm_time:
             print("---------------------------")
-            print("¡Es hora de despertar!")
+            print("¡Time to weak up!")
             print("---------------------------")
             wave_obj = sa.WaveObject.from_wave_file(sound_file)
             play_obj = wave_obj.play()

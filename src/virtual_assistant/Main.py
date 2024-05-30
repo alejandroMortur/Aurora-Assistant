@@ -7,7 +7,7 @@ from GenerateModule import generateAudio
 from MicHandler import getVoice
 from LLMModule import getLLMText
 from TextHandler import read_file, read_word, read_lines,search_WeatherKeyword,  get_country_from_city, find_city_and_state_in_phrase
-from PYFuncionModules.wikiModule import wiki_search
+from PYFuncionModules.wikiModule import search_wikipedia_summary
 from PYFuncionModules.alarmModule import start_alarm_thread, extract_time
 from PYFuncionModules.weatherModule import get_weather
 from PYFuncionModules.programsHandlerModule import open_program, close_program
@@ -24,7 +24,8 @@ languague = "es"
 location = []#array of locatión data of the user
 newslock = False#Bool value for non location acepted by the user
 
-File = [
+# List of original files
+files = [
     "../resources/Text/textResources/a.txt",
     "../resources/Text/textResources/ES/EsKeyWordsText02.json",
     "../resources/Text/textResources/ES/EsDefaultSentences01.json",
@@ -34,6 +35,9 @@ File = [
     "../resources/Text/textResources/ES/EnDefaultLoc03.txt",
     "../resources/Text/textResources/cities.json"
 ]
+
+# Normalize routes so that they work on any operating system and save to 'File'
+File = [os.path.normpath(file) for file in files]
 
 #initial dialog load
 content = read_file(File[0])

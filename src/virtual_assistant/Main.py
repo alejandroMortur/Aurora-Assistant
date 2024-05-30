@@ -24,15 +24,17 @@ languague = "es"
 location = []#array of locatión data of the user
 newslock = False#Bool value for non location acepted by the user
 
-# List of original files
+# List of files
 File = [
     "../resources/Text/textResources/IntroText01.txt",
     "../resources/Text/textResources/ES/EsKeyWordsText02.json",
     "../resources/Text/textResources/ES/EsDefaultSentences01.json",
     "../resources/Text/textResources/ES/EsDefaultLoc03.txt",
+    "../resources/Text/textResources/ES/EsUse04.txt",
     "../resources/Text/textResources/EN/EnKeyWordsText02.json",
     "../resources/Text/textResources/EN/EnDefaultSentences01.json",
     "../resources/Text/textResources/ES/EnDefaultLoc03.txt",
+    "../resources/Text/textResources/EN/EnUse04.txt",
     "../resources/Text/textResources/cities.json"
 ]
 
@@ -74,23 +76,30 @@ if "castellano" in language or "Castellano" in language:
         generateAudio("Entendido, el sistema de noticias queda deshabilitado", defaultLanguage)
         newslock = True
     else:
-        location = find_city_and_state_in_phrase(region,File[7])
+        location = find_city_and_state_in_phrase(region,File[9])
         generateAudio("Entendido, a si que vives en "+str(location[0])+", en el estado "+str(location[1])+", "+str(location[2]), defaultLanguage)
         print("location of user: "+str(location[0])+", en el estado "+str(location[1])+", "+str(location[2]))
+        
+    content = read_file(File[4])
+    print("---------------------------")
+    print(content)
+    print("---------------------------")
+    generateAudio(content, defaultLanguage)
+
 
 elif "Inglés" in language or "English" in language:
     
     defaultLanguage = "en-US"
     generateAudio("Got it, I will speak to you in English from now on", defaultLanguage)
     language = "en"
-    keyWords = read_word(File[4])
-    defaultSentences = read_lines(File[5])
+    keyWords = read_word(File[5])
+    defaultSentences = read_lines(File[6])
     print("---------------------------")
     print("Loaded data: " + str(keyWords) + "| " + str(defaultSentences))
     print("---------------------------")
   
 #default localication set english
-    content = read_file(File[6])
+    content = read_file(File[7])
     print("---------------------------")
     print(content)
     print("---------------------------")
@@ -103,9 +112,15 @@ elif "Inglés" in language or "English" in language:
         generateAudio("Understood, the news system is disabled then", defaultLanguage)
         newslock = True
     else:
-        location = find_city_and_state_in_phrase(region,File[7])
+        location = find_city_and_state_in_phrase(region,File[9])
         generateAudio("Got it soo you live in "+str(location[0])+", in the state "+str(location[1])+", "+str(location[2]), defaultLanguage)
         print("location of user: "+str(location[0])+", en el estado "+str(location[1])+", "+str(location[2]))
+        
+    content = read_file(File[8])
+    print("---------------------------")
+    print(content)
+    print("---------------------------")
+    generateAudio(content, defaultLanguage)
 
 #---------------------------------------------------------------------------------------------------
 
@@ -198,7 +213,7 @@ while True:
             print("------------------")
             print("Weather system:")
             print("------------------")
-            city = search_WeatherKeyword(response,File[7])#read the city from the json file
+            city = search_WeatherKeyword(response,File[9])#read the city from the json file
             print(city)
             if city == None:
                 generateAudio("Lo siento pero no tengo soporte para la localidad mencionada", defaultLanguage)

@@ -115,35 +115,34 @@ def find_city_and_state_in_phrase(phrase, cities_data):
     # If no city and state are found
     return []
 
-import re
-
 def text_cleaner(text, max_length=200):
-    # Eliminar etiquetas HTML/XML
+    # Remove HTML/XML tags
     clean_text = re.sub(r'<.*?>', '', text)
-    # Eliminar caracteres de conteo de caracteres
+    # Remove character count indicators
     clean_text = re.sub(r'\[\+\d+ chars\]', '', clean_text)
-    # Eliminar caracteres especiales excepto espacio y letras
-    clean_text = re.sub(r'[^\w\s]', '', clean_text)
+    # Remove special characters except space, letters, and commas
+    clean_text = re.sub(r'[^\w\s,]', '', clean_text)
     
     if len(clean_text) <= max_length:
         return clean_text.strip()
     
-    # Cortar el texto en el último punto que se encuentra o en una palabra a medio escribir
+    # Cut the text at the last period found or at an incomplete word
     last_period_index = clean_text.rfind('.')
-    if last_period_index != -1:  # Si se encuentra un punto en el texto
-        clean_text = clean_text[:last_period_index + 1]  # Conservar solo hasta el último punto y el siguiente espacio
+    if last_period_index != -1:  # If a period is found in the text
+        clean_text = clean_text[:last_period_index + 1]  # Keep only up to the last period and the following space
     else:
-        # Si no hay puntos en el texto, buscar el espacio más cercano antes de la mitad de la longitud máxima permitida
+        # If no periods are found in the text, find the closest space before the maximum allowed length
         closest_space_index = max_length
         for i in range(max_length // 2, max_length):
             if clean_text[i] == ' ':
                 closest_space_index = i
                 break
-        # Cortar el texto hasta el espacio más cercano
+        # Cut the text up to the closest space
         clean_text = clean_text[:closest_space_index]
-        # Eliminar la última palabra si está incompleta
+        # Remove the last word if it's incomplete
         last_space_index = clean_text.rfind(' ')
         if last_space_index != -1:
             clean_text = clean_text[:last_space_index]
         
-    return clean_text.strip()  # Eliminar espacios en blanco al inicio y al final del texto
+    return clean_text.strip()  # Remove leading and trailing spaces
+

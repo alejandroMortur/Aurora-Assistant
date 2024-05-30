@@ -2,9 +2,9 @@
   "responses": {
     "onlineSearch": ["Claro dejame que lo busque"],
     "openUtilities": ["Claro dejame que abra el programa"],
-    "moreInfo": ["¿Te ha sido útil esta información? ¿O quieres más?"],
+    "moreInfo": ["Te ha sido útil esta información? O quieres más?"],
     "closeUtilities": ["Claro dejame que cierre el programa"],
-    "putAlarm": ["Claro puedo configurarte una alarma ¿Cuando la quieres?"],
+    "putAlarm": ["Claro puedo configurarte una alarma Cuando la quieres?"],
     "greeting": [
       "Buenas!",
       "Hola!",
@@ -42,6 +42,8 @@
       "Hola, que tal tu dia hasta ahora!",
       "Hola, que alegria encontrarte aqui!"
     ],
+    "news": ["Entendido buscando noticias de:","Estas son las noticias que he recopilado el dia de hoy"],
+    "newsLock": ["Lo siento pero al no saber tu localidad el servicio de noticias queda deshabilitado"],
     "notUnderstood": ["Lo siento, no te he entendido"]
   }
 }

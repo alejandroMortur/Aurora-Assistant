@@ -42,6 +42,8 @@
       "Hi, how's your day so far!",
       "Hello, great to see you here!"
     ],
+    "news": ["Understood looking for news of:","These are the news I have collected today"],
+    "newsLock": ["I'm sorry, but since I don't know your location, the news service is disabled."],
     "notUnderstood": ["Sorry, I didn't understand you"]
   }
 }

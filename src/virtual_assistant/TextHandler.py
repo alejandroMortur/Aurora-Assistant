@@ -114,3 +114,36 @@ def find_city_and_state_in_phrase(phrase, cities_data):
     
     # If no city and state are found
     return []
+
+import re
+
+def text_cleaner(text, max_length=200):
+    # Eliminar etiquetas HTML/XML
+    clean_text = re.sub(r'<.*?>', '', text)
+    # Eliminar caracteres de conteo de caracteres
+    clean_text = re.sub(r'\[\+\d+ chars\]', '', clean_text)
+    # Eliminar caracteres especiales excepto espacio y letras
+    clean_text = re.sub(r'[^\w\s]', '', clean_text)
+    
+    if len(clean_text) <= max_length:
+        return clean_text.strip()
+    
+    # Cortar el texto en el último punto que se encuentra o en una palabra a medio escribir
+    last_period_index = clean_text.rfind('.')
+    if last_period_index != -1:  # Si se encuentra un punto en el texto
+        clean_text = clean_text[:last_period_index + 1]  # Conservar solo hasta el último punto y el siguiente espacio
+    else:
+        # Si no hay puntos en el texto, buscar el espacio más cercano antes de la mitad de la longitud máxima permitida
+        closest_space_index = max_length
+        for i in range(max_length // 2, max_length):
+            if clean_text[i] == ' ':
+                closest_space_index = i
+                break
+        # Cortar el texto hasta el espacio más cercano
+        clean_text = clean_text[:closest_space_index]
+        # Eliminar la última palabra si está incompleta
+        last_space_index = clean_text.rfind(' ')
+        if last_space_index != -1:
+            clean_text = clean_text[:last_space_index]
+        
+    return clean_text.strip()  # Eliminar espacios en blanco al inicio y al final del texto

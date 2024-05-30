@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from GenerateModule import generateAudio
 from MicHandler import getVoice
 from LLMModule import getLLMText
-from TextHandler import read_file, read_word, read_lines,search_WeatherKeyword,  get_country_from_city, find_city_and_state_in_phrase
+from TextHandler import read_file, read_word, read_lines,search_WeatherKeyword,  get_country_from_city, find_city_and_state_in_phrase, text_cleaner
 from PYFuncionModules.wikiModule import search_wikipedia_summary
 from PYFuncionModules.alarmModule import start_alarm_thread, extract_time
 from PYFuncionModules.weatherModule import get_weather
@@ -25,8 +25,8 @@ location = []#array of locatión data of the user
 newslock = False#Bool value for non location acepted by the user
 
 # List of original files
-files = [
-    "../resources/Text/textResources/a.txt",
+File = [
+    "../resources/Text/textResources/IntroText01.txt",
     "../resources/Text/textResources/ES/EsKeyWordsText02.json",
     "../resources/Text/textResources/ES/EsDefaultSentences01.json",
     "../resources/Text/textResources/ES/EsDefaultLoc03.txt",
@@ -35,9 +35,6 @@ files = [
     "../resources/Text/textResources/ES/EnDefaultLoc03.txt",
     "../resources/Text/textResources/cities.json"
 ]
-
-# Normalize routes so that they work on any operating system and save to 'File'
-File = [os.path.normpath(file) for file in files]
 
 #initial dialog load
 content = read_file(File[0])
@@ -122,23 +119,55 @@ while True:
         response = response.replace("aurora", "")
         
         #module for news handler  (done)     
-        if any(keyword in response for keyword in keyWords["newsSearch"]) and newslock == False:
-            print("------------------")
-            print("News system:")
-            print("------------------")
+        if any(keyword in response for keyword in keyWords["newsSearch"]):
             
-            #news = getVoice(defaultLanguage)
-
-            if not api_key:
-                print("Error: API key is not configured. Make sure the .env file contains the correct key.")
+            
+            if newslock == True:
+                
+                generateAudio(defaultSentences["newsLock"][0]+str(location), defaultLanguage)
+                print("------------------")
+                print("News system lock")
+                print("------------------")
+                
             else:
-                query = "España"
-                page_size = 7
-                news_by_query = get_news_today(apiNews_Key, query,languague,page_size)
-                print("Noticias por consulta en español:")
-                for news in news_by_query:
-                    print(news)
-                print("-----------------------------------------")
+                print("------------------")
+                print("News system:")
+                print("------------------")
+                
+                if not api_key:
+                    print("Error: API key is not configured. Make sure the .env file contains the correct key.")
+                else:
+                    query = location[0]
+                    generateAudio(defaultSentences["news"][0]+str(location), defaultLanguage)
+                    page_size = 7
+                    news_by_query = get_news_today(apiNews_Key, query,languague,page_size)
+                    print("News for consultation in: "+str(location))
+
+                    # Select two unique random indexes
+                    random_indices = random.sample(range(len(news_by_query)), 2)
+
+                    # Iterate over random indexes and concatenate titles and contents
+                    for i in random_indices:
+                        concatenated_content = ""
+                        news = news_by_query[i]
+                        print("New:", i+1)
+
+                        clean_title = text_cleaner(news['title'])
+                        print("Title:", clean_title)
+                        concatenated_content += clean_title + "     "  # Add the clean content to the concatenated string
+
+                        clean_content = text_cleaner(news['content'])
+                        print("Content:", clean_content)
+                        concatenated_content += clean_content + " "  # Add the clean content to the concatenated string
+
+                        generateAudio(concatenated_content, defaultLanguage)
+
+                        print()
+                    
+                    print("-----------------------------------------")
+                    
+                    generateAudio(defaultSentences["news"][1], defaultLanguage)
+                
         #module for onlineSearch (done) 
         elif any(keyword in response for keyword in keyWords["onlineSearch"]):
             print("------------------")

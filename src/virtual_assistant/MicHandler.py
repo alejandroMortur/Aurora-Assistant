@@ -13,7 +13,7 @@ def getVoice(language):
     with sr.Microphone() as source:
         # Adjust for ambient noise
         r.adjust_for_ambient_noise(source, duration=1)
-        print("Say something: ")
+        print("Recording voice: ")
         audio = r.listen(source)
         
         try:
@@ -23,14 +23,28 @@ def getVoice(language):
             return text
             
         except sr.UnknownValueError:
-            print("---------------------------")
-            print("Sorry, I didn't understand what you said.")
-            print("---------------------------")
-            generateAudio("Sorry, I didn't understand.")
+            
+            if language == "es":
+                print("---------------------------")
+                print("Sorry, I didn't understand what you said.")
+                print("---------------------------")
+                generateAudio("Lo siento, No te he entendido")
+            elif language == "en":
+                print("---------------------------")
+                print("Sorry, I didn't understand what you said.")
+                print("---------------------------")
+                generateAudio("Sorry, I didn't understand what you said.",language)
             return none
         except sr.RequestError as e:
-            print("---------------------------")
-            print("Could not complete the request; {0}".format(e))
-            print("---------------------------")
-            generateAudio("An error occurred while processing your request.")
+            
+            if language == "es":
+                print("---------------------------")
+                print("Could not complete the request; {0}".format(e))
+                print("---------------------------")
+                generateAudio("Lo siento se ha producido un error")
+            elif language  == "en":
+                print("---------------------------")
+                print("Could not complete the request; {0}".format(e))
+                print("---------------------------")
+                generateAudio("sorry an error occurred",language)
             return none

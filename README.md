@@ -40,6 +40,11 @@ To install Aurora, follow these steps:
    python .\Main.py
    ```
 
-# Aurora project estructure🌟
+# Aurora project estructure:🌟
 
-![Estructure of the project](markmap-Aurora.png)
+![Estructure of the files of the project](markmap-Aurora.png)
+
+If you want to run all the tests without having to go 1 by 1, run the 'test_main.py' file
+
+![Estructure of the test of the project](markmap-Aurora-Tests.png)
+

@@ -1,7 +1,7 @@
 from openai import OpenAI
 import re
 
-def getLLMText(text, tokens, language):
+def getLLMText(text, tokens, language,queue):
     try:
         # Point to the local server
         client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
@@ -32,6 +32,8 @@ def getLLMText(text, tokens, language):
         # Ensure the response ends with a complete sentence
         complete_response = ensure_complete_sentence(response)
 
+        queue.put("LLM respond corretly get")
+
         print("---------------------------")
         print(complete_response)
         print("---------------------------")
@@ -39,6 +41,7 @@ def getLLMText(text, tokens, language):
     
     except Exception as e:
         print("An error occurred:", e)
+        queue.put("An error occurred:"+e)
         return None
 
 def ensure_complete_sentence(text):

@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 # Cargar las variables de entorno desde el archivo .env
 load_dotenv()
 
-def get_news_today(api_key, query, language,page_size):
+def get_news_today(api_key, query, language,page_size,queue):
     
     sort_by = 'popularity'
     from_date = (datetime.today() - timedelta(days=7)).strftime('%Y-%m-%d')  # Get news from the last week
@@ -50,14 +50,18 @@ def get_news_today(api_key, query, language,page_size):
                         })
                 else:
                     print("No headlines found.")
+                    queue.put("No headlines found.")
             else:
                 print("Error in API response:", data.get('message', 'No error message provided.'))
+                queue.put("Error in API response:" +str(data.get('message', 'No error message provided.')))
         else:
             print("Error when making the request:", response.status_code)
+            queue.put("Error when making the request:"+response.status_code)
         
         return news_list
         
     except Exception as e:
         print("An error occurred:", e)
+        queue.put("An error occurred:"+e)
         return []
 

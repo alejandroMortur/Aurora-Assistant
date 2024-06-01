@@ -14,7 +14,7 @@ def find_program(program_name):
             found_programs.append(file_name)
     return found_programs
 
-def open_program(program_name):
+def open_program(program_name,queue):
     # Find the program paths
     program_paths = find_program(program_name)
     if program_paths:
@@ -22,26 +22,30 @@ def open_program(program_name):
             # Open each program in a separate thread
             print("---------------------------")
             print(f'{program_name} found. Opening...')
+            queue.put()
             print("---------------------------")
             thread = threading.Thread(target=subprocess.Popen, args=([os.path.join(os.environ['SystemRoot'], 'System32', program_path)],))
             thread.start()
     else:
         print("---------------------------")
         print(f'{program_name} not found.')
+        queue.put(f'{program_name} not found.')
         print("---------------------------")
 
-def close_program(program_name):
+def close_program(program_name,queue):
     # Ensure program name has .exe extension
     program_name = program_name.lower() + '.exe'
     if is_program_running(program_name):
         # Close the program if it is running
         print("---------------------------")
         print(f'{program_name} found. Closing...')
+        queue.put(f'{program_name} found. Closing...')
         print("---------------------------")
         subprocess.run(['taskkill', '/f', '/im', program_name])
     else:
         print("---------------------------")
         print(f'{program_name} not found or already closed.')
+        queue.put(f'{program_name} not found or already closed.')
         print("---------------------------")
 
 def is_program_running(program_name):

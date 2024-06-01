@@ -2,7 +2,7 @@ import requests
 from dotenv import load_dotenv
 import os
 
-def get_weather(city,api_key,defaultLanguage):
+def get_weather(city,api_key,defaultLanguage,queue):
     # URL for the current weather
     url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{city}?unitGroup=metric&key={api_key}&contentType=json"
 
@@ -41,9 +41,11 @@ def get_weather(city,api_key,defaultLanguage):
                 print(phrase)
                 print("---------------------------")
             
+            queue.put("Wheater information found correctly")
             return phrase
         else:
             print("No current weather information found.")
+            queue.put("No current weather information found.")
             return None
     else:
         print(f"Error: {response.status_code}")
@@ -53,11 +55,13 @@ def get_weather(city,api_key,defaultLanguage):
             print("---------------------------")
             print("Error content:")
             print(error_data)
+            queue.put(error_data)
             print("---------------------------")
         except:
             # If it cannot be loaded as JSON, print the content as text
             print("---------------------------")
             print("Error content:")
             print(response.text)
+            queue.put("Error content:"+str(response.text))
             print("---------------------------")
         return None

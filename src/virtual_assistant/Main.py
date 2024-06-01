@@ -264,7 +264,7 @@ if __name__ == "__main__":
                     print(city)
                     if city == "":
                         
-                        city  = location[0]
+                        city = location[0] #in case of no location in sentence , auto add location fron register
                         
                         if location == "":
                             generateAudio(defaultSentences["wheaterNotLoc"][0], defaultLanguage)

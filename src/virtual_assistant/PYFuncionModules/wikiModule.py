@@ -28,9 +28,11 @@ def search_wikipedia_summary(query, language,queue,num_sentences,):
     except wikipedia.exceptions.DisambiguationError as e:
         print("DisambiguationError: There are multiple possible pages. Please be more specific in your query.")
         queue.put("DisambiguationError: There are multiple possible pages. Please be more specific in your query.")
+        
     except wikipedia.exceptions.PageError as e:
         print("PageError: The page does not exist. Please check your query.")
         queue.put("PageError: The page does not exist. Please check your query.")
+        
     except wikipedia.exceptions.WikipediaException as e:
         print("WikipediaException: An unknown Wikipedia exception occurred.")
         queue.put("WikipediaException: An unknown Wikipedia exception occurred.")

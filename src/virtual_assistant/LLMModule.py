@@ -47,8 +47,10 @@ def getLLMText(text, tokens, language,queue):
 def ensure_complete_sentence(text):
     # Use a regex to find the last complete sentence
     matches = list(re.finditer(r'[.!?]', text))
+    
     if matches:
         last_match = matches[-1]
         complete_sentence = text[:last_match.end()]
         return complete_sentence.strip()
+    
     return text.strip()

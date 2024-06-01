@@ -35,6 +35,7 @@ def getVoice(language):
                 print("---------------------------")
                 generateAudio("Sorry, I didn't understand what you said.",language)
             return none
+        
         except sr.RequestError as e:
             
             if language == "es":

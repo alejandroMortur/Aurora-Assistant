@@ -35,6 +35,7 @@ def open_program(program_name,queue):
 def close_program(program_name,queue):
     # Ensure program name has .exe extension
     program_name = program_name.lower() + '.exe'
+    
     if is_program_running(program_name):
         # Close the program if it is running
         print("---------------------------")
@@ -42,6 +43,7 @@ def close_program(program_name,queue):
         queue.put(f'{program_name} found. Closing...')
         print("---------------------------")
         subprocess.run(['taskkill', '/f', '/im', program_name])
+        
     else:
         print("---------------------------")
         print(f'{program_name} not found or already closed.')

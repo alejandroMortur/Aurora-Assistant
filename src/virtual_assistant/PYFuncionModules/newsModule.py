@@ -51,9 +51,11 @@ def get_news_today(api_key, query, language,page_size,queue):
                 else:
                     print("No headlines found.")
                     queue.put("No headlines found.")
+                    
             else:
                 print("Error in API response:", data.get('message', 'No error message provided.'))
                 queue.put("Error in API response:" +str(data.get('message', 'No error message provided.')))
+                
         else:
             print("Error when making the request:", response.status_code)
             queue.put("Error when making the request:"+response.status_code)

@@ -348,6 +348,7 @@ if __name__ == "__main__":
         log_process.terminate()  # Ensure the logger process is terminated
         log_process.join()  # Wait for the logger process to join
         sys.exit(0)
+        
     finally:
         log_process.terminate()  # Ensure the logger process is terminated
         log_process.join()  # Wait for the logger process to join

@@ -88,7 +88,7 @@ if __name__ == "__main__":
             print("---------------------------")
             generateAudio(content, defaultLanguage)
             region = getVoice(defaultLanguage)
-            while region == None:
+            while region == "":
                 region = getVoice(defaultLanguage)
                 
             if "no" in region or "No" in region:
@@ -128,7 +128,7 @@ if __name__ == "__main__":
             print("---------------------------")
             generateAudio(content, defaultLanguage)
             region = getVoice(defaultLanguage)
-            while region == None:
+            while region == "":
                 region = getVoice(defaultLanguage)
                 
             if "no" in region or "No" in region:

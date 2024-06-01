@@ -6,3 +6,6 @@
 
 # Ignore .env file
 .env
+
+# Ignore logs file
+Data.log

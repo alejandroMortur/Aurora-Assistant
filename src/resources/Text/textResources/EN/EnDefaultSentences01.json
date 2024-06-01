@@ -44,6 +44,7 @@
     ],
     "news": ["Understood looking for news of:","These are the news I have collected today"],
     "newsLock": ["I'm sorry, but since I don't know your location, the news service is disabled."],
+    "wheaterNotLoc": ["Sorry but I don't have support for the mentioned locale"],
     "notUnderstood": ["Sorry, I didn't understand you"]
   }
 }

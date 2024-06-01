@@ -39,3 +39,5 @@ To install Aurora, follow these steps:
    ```bash
    python .\Main.py
    ```
+
+![Estructure of the project](markmap-Aurora.svg)

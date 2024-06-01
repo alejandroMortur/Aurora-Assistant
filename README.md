@@ -40,4 +40,4 @@ To install Aurora, follow these steps:
    python .\Main.py
    ```
 
-![Estructure of the project](markmap-Aurora.svg)
+![Estructure of the project](markmap-Aurora.png)

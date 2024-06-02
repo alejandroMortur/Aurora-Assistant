@@ -1,0 +1,11 @@
+# Ignore all files with .gguf extension
+*.gguf
+
+# Ignore all files with .exe extension
+*.exe
+
+# Ignore .env file
+.env
+
+# Ignore logs file
+Data.log

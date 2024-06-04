@@ -60,7 +60,8 @@ if __name__ == "__main__":
         print(content)
         print("---------------------------")
         generateAudio(content, defaultLanguage)#generate audio from text introduction file 
-        
+
+        language = ""
         language = getVoice(defaultLanguage)
         while language == None:
             language = getVoice(defaultLanguage)
@@ -95,6 +96,7 @@ if __name__ == "__main__":
             generateAudio(content, defaultLanguage)#generate audio from text loc file 
             
             #code to get respond from the user
+            region = ""
             region = getVoice(defaultLanguage)
             while region == "":
                 region = getVoice(defaultLanguage)
@@ -147,6 +149,7 @@ if __name__ == "__main__":
             
             #code to get respond from the user
             #while loop used to get al the time the voice if is an error during record
+            region = ""
             region = getVoice(defaultLanguage)
             while region == "":
                 region = getVoice(defaultLanguage)
@@ -177,6 +180,7 @@ if __name__ == "__main__":
         while True:
             
             #while loop used to get al the time the voice if is an error during record
+            response = ""
             response = getVoice(defaultLanguage).lower()
             while response == "":
                 response = getVoice(defaultLanguage).lower()
@@ -286,6 +290,7 @@ if __name__ == "__main__":
                     queue.put("Entry to alarm module") #log system flag access to the alarm block
                     
                     generateAudio(defaultSentences["putAlarm"][0], defaultLanguage) #generate voice from the default sentences
+                    response = ""
                     response = getVoice(defaultLanguage).lower()
                     alarm_time  = extract_time(response)
                     

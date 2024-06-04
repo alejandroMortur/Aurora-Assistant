@@ -334,7 +334,7 @@ if __name__ == "__main__":
                         end_date = "today" # end date
 
                         if api_key:
-                            respond = get_weather(city, api_key, defaultLanguage,queue)
+                            respond = get_weather(city, api_key,language,queue)
                             queue.put("Weather correct data ") #log system flag correct data get
                             
                             if respond:

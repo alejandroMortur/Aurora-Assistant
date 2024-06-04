@@ -37,7 +37,7 @@ if __name__ == "__main__":
         "../resources/Text/textResources/ES/EsUse04.txt",
         "../resources/Text/textResources/EN/EnKeyWordsText02.json",
         "../resources/Text/textResources/EN/EnDefaultSentences01.json",
-        "../resources/Text/textResources/ES/EnDefaultLoc03.txt",
+        "../resources/Text/textResources/EN/EnDefaultLoc03.txt",
         "../resources/Text/textResources/EN/EnUse04.txt",
         "../resources/Text/textResources/cities.json",
         "../resources/Logs/Data.log"

@@ -48,4 +48,4 @@ def getVoice(language):
                 print("Could not complete the request; {0}".format(e))
                 print("---------------------------")
                 generateAudio("sorry an error occurred",language)
-            return none
+            return ""

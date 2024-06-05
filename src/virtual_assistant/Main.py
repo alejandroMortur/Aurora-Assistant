@@ -413,7 +413,7 @@ if __name__ == "__main__":
                     queue.put("Entry to LLM module") #log system flag for access to the LLM module
                     
                     textGenerated = getLLMText(response, 100,defaultLanguage,queue)
-                    generateAudio(textGenerated, defaultLanguage,queue) #generate voice from the respond
+                    generateAudio(textGenerated, defaultLanguage) #generate voice from the respond
                 
             # Module for non-understood voice issue (done)
             # This module handles cases where the user's query does not match any known keywords or commands:

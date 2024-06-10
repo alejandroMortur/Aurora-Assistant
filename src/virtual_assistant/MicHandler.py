@@ -33,7 +33,6 @@ def getVoice(language):
                 print("---------------------------")
                 print("Sorry, I didn't understand what you said.")
                 print("---------------------------")
-                generateAudio("Sorry, I didn't understand what you said.",language)
             return none
         
         except sr.RequestError as e:
@@ -47,5 +46,4 @@ def getVoice(language):
                 print("---------------------------")
                 print("Could not complete the request; {0}".format(e))
                 print("---------------------------")
-                generateAudio("sorry an error occurred",language)
             return ""

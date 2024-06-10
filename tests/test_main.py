@@ -1,4 +1,4 @@
-# Importamos los módulos de prueba manualmente
+# Imports of test modules 
 from testBlockScripts.test_alarm import *
 from testBlockScripts.test_news import *
 from testBlockScripts.test_programs_open import *

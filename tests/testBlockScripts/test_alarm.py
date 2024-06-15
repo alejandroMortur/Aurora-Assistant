@@ -3,7 +3,7 @@ from unittest.mock import patch, Mock
 import threading
 import time
 import datetime  
-from src.virtual_assistant.PYFuncionModules.alarmModule import extract_time, set_alarm, start_alarm_thread
+from src.virtual_assistant.pyfuncionmodules.alarmModule import extract_time, set_alarm, start_alarm_thread
 
 # Test for the extract_time function with valid inputs
 def test_extract_time_valid():
@@ -21,7 +21,7 @@ def test_extract_time_invalid():
 
 # Test for the start_alarm_thread function
 @patch('threading.Thread')
-@patch('src.virtual_assistant.PYFuncionModules.alarmModule.set_alarm')
+@patch('src.virtual_assistant.pyfuncionmodules.alarmModule.set_alarm')
 def test_start_alarm_thread(mock_set_alarm, mock_thread):
     start_alarm_thread("08:30")
     mock_thread.assert_called_once_with(target=mock_set_alarm, args=("08:30",))
@@ -32,7 +32,7 @@ def test_set_alarm(mock_print):
     mock_wave_object = Mock()
     mock_wave_object.play.return_value.wait_done.side_effect = lambda: time.sleep(0.1)
 
-    with patch('src.virtual_assistant.PYFuncionModules.alarmModule.sa.WaveObject.from_wave_file') as mock_wave_file:
+    with patch('src.virtual_assistant.pyfuncionmodules.alarmModule.sa.WaveObject.from_wave_file') as mock_wave_file:
         mock_wave_file.return_value = mock_wave_object
         set_alarm("08:30")
     

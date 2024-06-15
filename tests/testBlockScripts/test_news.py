@@ -3,7 +3,7 @@ import os
 from unittest.mock import patch, Mock
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from src.virtual_assistant.PYFuncionModules.newsModule import get_news_today
+from src.virtual_assistant.pyfuncionmodules.newsModule import get_news_today
 
 # Simulate the news API credentials
 load_dotenv()

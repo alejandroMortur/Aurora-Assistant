@@ -1,7 +1,7 @@
 import pytest
 import os
 from unittest.mock import patch, Mock
-from src.virtual_assistant.PYFuncionModules.programsHandlerModule import open_program, close_program
+from src.virtual_assistant.pyfuncionmodules.programsHandlerModule import open_program, close_program
 
 # Test for the open_program function
 def test_open_program():
@@ -28,7 +28,7 @@ def test_close_program():
     fake_queue = Mock()
 
     # Mock the call to subprocess.run
-    with patch('src.virtual_assistant.PYFuncionModules.programsHandlerModule.subprocess.run') as mock_run:
+    with patch('src.virtual_assistant.pyfuncionmodules.programsHandlerModule.subprocess.run') as mock_run:
         # Execute the function under test
         close_program("notepad", fake_queue)
 

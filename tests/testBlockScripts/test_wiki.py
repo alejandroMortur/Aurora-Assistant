@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, Mock
-from src.virtual_assistant.PYFuncionModules.wikiModule import search_wikipedia_summary
+from src.virtual_assistant.pyfuncionmodules.wikiModule import search_wikipedia_summary
 
 # Test for the search_wikipedia_summary function
 def test_search_wikipedia_summary():

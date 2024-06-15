@@ -29,7 +29,7 @@ def test_getLLMText():
         mock_openai.assert_called_once_with(base_url="http://localhost:1234/v1", api_key="lm-studio")
 
         # Verify that the correct message was printed
-        fake_queue.put.assert_called_once_with("LLM respond corretly get")
+        fake_queue.put.assert_called_once_with("LLM respond correctly get")
 
         # Verify that the response is as expected
         assert response == "This is a test response."

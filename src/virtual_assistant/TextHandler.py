@@ -2,8 +2,18 @@ import json
 import re
 from unidecode import unidecode
 
-#code block for read initial dialog
 def read_file(file_path):
+    
+    """
+    Reads the entire content of a file and returns it as a single string.
+
+    Parameters:
+    - file_path (str): The path to the file to read.
+
+    Returns:
+    - file_content (str): The concatenated string of all lines in the file.
+    """
+    
     # Initialize a list to store the lines of the file
     lines = []
     
@@ -18,8 +28,18 @@ def read_file(file_path):
     
     return file_content
 
-#code block for read vocie keywords
 def read_word(file_path):
+    
+    """
+    Reads keywords from a JSON file and organizes them into a dictionary.
+
+    Parameters:
+    - file_path (str): The path to the JSON file containing keywords.
+
+    Returns:
+    - words (dict): A dictionary where keys are category names and values are lists of keywords.
+    """
+    
     words = {}
 
     # Open the JSON file
@@ -41,8 +61,18 @@ def read_word(file_path):
 
 import json
 
-#code block for read dialog setences
 def read_lines(file_path):
+    
+    """
+    Reads dialog lines from a JSON file and organizes them into a dictionary.
+
+    Parameters:
+    - file_path (str): The path to the JSON file containing dialog lines.
+
+    Returns:
+    - responses (dict): A dictionary where keys are category names and values are lists of dialog responses.
+    """
+    
     responses = {}
 
     # Open the JSON file
@@ -62,8 +92,19 @@ def read_lines(file_path):
             
     return responses
 
-#code block for read cities
-def search_WeatherKeyword(input_text, keyword_data):
+def search_weather_keyword(input_text, keyword_data):
+    
+    """
+    Searches for a weather keyword (city name) in user input using a JSON file.
+
+    Parameters:
+    - input_text (str): The user input text to search for keywords.
+    - keyword_data (str): The path to the JSON file containing keyword data.
+
+    Returns:
+    - city_name (str or None): The matched city name if found, otherwise None.
+    """
+    
     # Load keyword data from JSON file
     with open(keyword_data, 'r', encoding='utf-8') as file:
         data = json.load(file)
@@ -74,6 +115,7 @@ def search_WeatherKeyword(input_text, keyword_data):
     # Search for keyword (city name) in user input
     for entry in data:
         city_name = entry.get("name", "").lower()
+        
         if city_name in input_words:
             return entry["name"]
     
@@ -81,6 +123,18 @@ def search_WeatherKeyword(input_text, keyword_data):
     return None
 
 def get_country_from_city(city_name, cities_data):
+    
+    """
+    Retrieves the country name associated with a given city name from a JSON file.
+
+    Parameters:
+    - city_name (str): The name of the city to search for.
+    - cities_data (str): The path to the JSON file containing city data.
+
+    Returns:
+    - country_name (str or None): The country name of the city if found, otherwise None.
+    """
+    
     # Load cities data from JSON file
     with open(cities_data, 'r', encoding='utf-8') as file:
         data = json.load(file)
@@ -93,8 +147,20 @@ def get_country_from_city(city_name, cities_data):
     # If city not found
     return None
 
-#Get localitation module
+
 def find_city_and_state_in_phrase(phrase, cities_data):
+    
+    """
+    Finds city and state names in a given phrase using a JSON file containing city data.
+
+    Parameters:
+    - phrase (str): The phrase to search for city and state names.
+    - cities_data (str): The path to the JSON file containing city data.
+
+    Returns:
+    - city_info (list): A list containing city name, state name, and country name if found; empty list if not found.
+    """
+    
     # Load cities data from JSON file
     with open(cities_data, 'r', encoding='utf-8') as file:
         data = json.load(file)
@@ -116,10 +182,24 @@ def find_city_and_state_in_phrase(phrase, cities_data):
     return []
 
 def text_cleaner(text, max_length=200):
+    
+    """
+    Cleans text by removing HTML tags, special characters, and limiting its length.
+
+    Parameters:
+    - text (str): The text to clean.
+    - max_length (int): The maximum allowed length of the cleaned text. Default is 200 characters.
+
+    Returns:
+    - clean_text (str): The cleaned text.
+    """
+    
     # Remove HTML/XML tags
     clean_text = re.sub(r'<.*?>', '', text)
+    
     # Remove character count indicators
     clean_text = re.sub(r'\[\+\d+ chars\]', '', clean_text)
+    
     # Remove special characters except space, letters, and commas
     clean_text = re.sub(r'[^\w\s,]', '', clean_text)
     
@@ -128,19 +208,26 @@ def text_cleaner(text, max_length=200):
     
     # Cut the text at the last period found or at an incomplete word
     last_period_index = clean_text.rfind('.')
+    
     if last_period_index != -1:  # If a period is found in the text
         clean_text = clean_text[:last_period_index + 1]  # Keep only up to the last period and the following space
+        
     else:
+        
         # If no periods are found in the text, find the closest space before the maximum allowed length
         closest_space_index = max_length
+        
         for i in range(max_length // 2, max_length):
             if clean_text[i] == ' ':
                 closest_space_index = i
                 break
+            
         # Cut the text up to the closest space
         clean_text = clean_text[:closest_space_index]
+        
         # Remove the last word if it's incomplete
         last_space_index = clean_text.rfind(' ')
+        
         if last_space_index != -1:
             clean_text = clean_text[:last_space_index]
         

@@ -44,7 +44,7 @@
     ],
     "news": ["Entendido buscando noticias de:","Estas son las noticias que he recopilado el dia de hoy"],
     "newsLock": ["Lo siento pero al no saber tu localidad el servicio de noticias queda deshabilitado"],
-    "wheaterNotLoc": ["Lo siento pero no tengo soporte para la localidad mencionada"],
+    "weatherNotLoc": ["Lo siento pero no tengo soporte para la localidad mencionada"],
     "notUnderstood": ["Lo siento, no te he entendido"]
   }
 }

@@ -2,6 +2,14 @@ from playsound import playsound
 import os
 
 def speak():
+    
+    """
+    Function to play the generated voice audio file and remove it afterward.
+
+    Raises:
+    - Exception: If there is an error during audio playback or file removal.
+    """
+    
     try:
         # Play the generated voice audio file
         playsound(r"../resources/Sounds/generatedVoices/voice.mp3")

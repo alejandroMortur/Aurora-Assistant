@@ -2,6 +2,20 @@ from openai import OpenAI
 import re
 
 def getLLMText(text, tokens, language,queue):
+    
+    """
+    Function to interact with the OpenAI Language Model (LLM) and get a response.
+
+    Parameters:
+    - text (str): User input text.
+    - tokens (int): Maximum tokens to generate in the response.
+    - language (str): Language code ("es-ES" for Spanish, "en-US" for English).
+    - queue (multiprocessing.Queue): Queue to communicate completion status.
+
+    Returns:
+    - str: Complete response from the LLM.
+    """
+    
     try:
         # Point to the local server
         client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
@@ -9,9 +23,11 @@ def getLLMText(text, tokens, language,queue):
         if language == "es-ES":
             system_message = "Eres un asistente inteligente. Siempre proporcionas respuestas bien razonadas que son correctas y útiles."
             user_message = f"Por favor, responde en español. {text}"
+            
         elif language == "en-US":
             system_message = "You are an intelligent assistant. You always provide well-reasoned answers that are correct and useful."
             user_message = f"Please respond in English. {text}"
+            
         else:
             raise ValueError("Unsupported language")
 
@@ -32,7 +48,7 @@ def getLLMText(text, tokens, language,queue):
         # Ensure the response ends with a complete sentence
         complete_response = ensure_complete_sentence(response)
 
-        queue.put("LLM respond corretly get")
+        queue.put("LLM respond correctly get")
 
         print("---------------------------")
         print(complete_response)
@@ -40,8 +56,10 @@ def getLLMText(text, tokens, language,queue):
         return complete_response
     
     except Exception as e:
+        
         print("An error occurred:", e)
         queue.put("An error occurred:"+e)
+        
         return None
 
 def ensure_complete_sentence(text):

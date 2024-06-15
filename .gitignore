@@ -7,5 +7,6 @@
 # Ignore .env file
 .env
 
-# Ignore __pycache__ file
+# Ignore Python byte-compiled files
+*.pyc
 __pycache__/

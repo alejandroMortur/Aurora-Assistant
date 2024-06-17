@@ -37,7 +37,7 @@ def open_program(program_name,queue):
             # Open each program in a separate thread
             print("---------------------------")
             print(f'{program_name} found. Opening...')
-            queue.put()
+            queue.put("open program: "+program_name)
             print("---------------------------")
             thread = threading.Thread(target=subprocess.Popen, args=([os.path.join(os.environ['SystemRoot'], 'System32', program_path)],))
             thread.start()

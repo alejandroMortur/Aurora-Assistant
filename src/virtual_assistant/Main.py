@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from GenerateModule import generateAudio
 from MicHandler import getVoice
 from LLMModule import getLLMText
-from TextHandler import read_file, read_word, read_lines,search_weather_keyword,  get_country_from_city, find_city_and_state_in_phrase, save_user_data, load_user_data
+from TextHandler import read_file, read_word, read_lines,search_weather_keyword,  get_country_from_city, find_city_and_state_in_phrase, save_user_data, load_user_data, text_cleaner
 from pyfuncionmodules.wikiModule import search_wikipedia_summary
 from pyfuncionmodules.alarmModule import start_alarm_thread, extract_time
 from pyfuncionmodules.weatherModule import get_weather
@@ -332,12 +332,12 @@ if __name__ == "__main__":
                                 concatenated_content += clean_content + " "  # Add the clean content to the concatenated string
                                 
                                 # Generate audio from the concatenated content
-                                generate_audio(concatenated_content, default_language)
+                                generateAudio(concatenated_content, default_Language)
 
                             print("-----------------------------------------")
 
                             # Generate audio from the default sentence
-                            generate_audio(default_sentences["news"][1], default_language)
+                            generateAudio(default_sentences["news"][1], default_Language)
                             
                 elif any(keyword in response for keyword in keyWords["onlineSearch"]):
 
@@ -356,7 +356,7 @@ if __name__ == "__main__":
                     print("Online search:")
                     print("------------------")
                         
-                    queue.put("Entry yo Online search module") #log system flag for access to the online search module
+                    queue.put("Entry to Online search module") #log system flag for access to the online search module
                     generateAudio(default_sentences["onlineSearch"][0], default_Language) #generate voice from the default sentences
 
                     respond =  search_wikipedia_summary(response,language,queue,3)

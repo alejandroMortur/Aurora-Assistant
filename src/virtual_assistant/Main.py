@@ -28,6 +28,8 @@ if __name__ == "__main__":
     language = "es"
     location = []#array of location data of the user
     news_lock = False#Bool value for non location accepted by the user
+    keyWords = ""
+    default_sentences = ""
 
     # List of files
     File = [
@@ -217,12 +219,29 @@ if __name__ == "__main__":
                 
             location, default_Language, language, news_lock =  load_user_data(File[11])
                 
+            print(language)    
+            
             queue.put("-----------------------------")
             queue.put("Data from user loaded")#load data log system flag
             queue.put("-----------------------------")
                 
-            keyWords = read_word(File[5])
-            default_sentences = read_lines(File[6])
+            if "es" in language in language:
+                
+                keyWords = read_word(File[1])
+                default_sentences = read_lines(File[2])
+                
+                print("---------------------------")
+                print("Loaded data: " + str(keyWords) + "| " + str(default_sentences))
+                print("---------------------------")
+                
+            elif "en" in language:
+                
+                keyWords = read_word(File[5])
+                default_sentences = read_lines(File[6])
+                
+                print("---------------------------")
+                print("Loaded data: " + str(keyWords) + "| " + str(default_sentences))
+                print("---------------------------")
             
         #---------------------------------------------------------------------------------------------------
         
@@ -320,123 +339,123 @@ if __name__ == "__main__":
                             # Generate audio from the default sentence
                             generate_audio(default_sentences["news"][1], default_language)
                             
-            elif any(keyword in response for keyword in keyWords["onlineSearch"]):
+                elif any(keyword in response for keyword in keyWords["onlineSearch"]):
 
-                """
-                Module for online search.
+                    """
+                    Module for online search.
 
-                This module handles online search queries. If the user's request includes any of the specified keywords for online search:
+                    This module handles online search queries. If the user's request includes any of the specified keywords for online search:
 
-                1. The system logs the entry into the online search module and generates an audio message indicating the start of the search.
-                2. It performs a Wikipedia summary search based on the user's query.
-                - If a response is received, it generates an audio message with the search result and logs the successful data retrieval.
-                - If no response is received, it logs an error message.
-                """
-                
-                print("------------------")
-                print("Online search:")
-                print("------------------")
+                    1. The system logs the entry into the online search module and generates an audio message indicating the start of the search.
+                    2. It performs a Wikipedia summary search based on the user's query.
+                    - If a response is received, it generates an audio message with the search result and logs the successful data retrieval.
+                    - If no response is received, it logs an error message.
+                    """
                     
-                queue.put("Entry yo Online search module") #log system flag for access to the online search module
-                generateAudio(default_sentences["onlineSearch"][0], default_Language) #generate voice from the default sentences
-
-                respond =  search_wikipedia_summary(response,language,queue,3)
-                
-                if respond != "":
-                    
-                    generateAudio(respond, default_Language) #generate voice from the respond
-                    queue.put("Correct search online data") #log system flag for correct data
-
-                else: 
-                    
-                    queue.put("Error: search online data") #log system flag an error
-                
-            elif any(keyword in response for keyword in keyWords["putAlarm"]) and "alarma" in response:
-
-                """
-                Module for AlarmHandler.
-
-                This module handles alarm-setting queries. If the user's request includes any of the specified keywords for setting an alarm and the word "alarma":
-
-                1. The system logs the entry into the alarm module and generates an audio message indicating the start of the alarm setup.
-                2. It captures the user's voice input for the alarm time, extracts the time from the input, and sets the alarm accordingly.
-                3. Based on the default language, it generates an appropriate audio message confirming the alarm time.
-                4. Finally, it starts the alarm thread and logs the successful alarm setup.
-                """
-
-                print("------------------")
-                print("Alarm system:")
-                print("------------------")
-                    
-                queue.put("Entry to alarm module") #log system flag access to the alarm block
-                    
-                generateAudio(default_sentences["putAlarm"][0], default_Language) #generate voice from the default sentences
-                
-                response = ""
-                response = getVoice(default_Language).lower()
-                alarm_time  = extract_time(response)
-                    
-                if default_Language == "en-US":
-                    
-                    generateAudio("alarm "+alarm_time, default_Language) #generate voice from the default sentences in Es
-                    
-                elif default_Language == "es-ES":
-                    
-                    generateAudio("alarma configurada "+alarm_time, default_Language) #generate voice from the default sentences in En
-                    start_alarm_thread(alarm_time)
-                    queue.put("Correct alarm set") #log system flag for alarm set
-                
-            elif any(keyword in response for keyword in keyWords["weatherUtilities"]):
-
-                """
-                Module for weather handler.
-
-                This module handles weather-related queries. If the user's request includes any of the specified keywords for weather utilities:
-
-                1. The system logs the entry into the weather module and attempts to identify the city from the user's query using a JSON file.
-                2. If no city is found in the query, it defaults to the user's registered location. If no location is available, it generates an audio message indicating the error and logs it.
-                3. If a city is identified and the API key is configured:
-                - It fetches weather data for the specified city.
-                - Logs the successful data retrieval.
-                - Generates an audio message with the weather information.
-                - Logs the error if the data retrieval fails.
-                """
-
-                print("------------------")
-                print("Weather system:")
-                print("------------------")
-                    
-                queue.put("Entry to Weather module") #log system flag for access to the weather module
-                    
-                city = search_weather_keyword(response,File[9])#read the city from the json file
-                print(city)
-
-                if city == "":
+                    print("------------------")
+                    print("Online search:")
+                    print("------------------")
                         
-                    city = location[0] #in case of no location in sentence , auto add location fron register
+                    queue.put("Entry yo Online search module") #log system flag for access to the online search module
+                    generateAudio(default_sentences["onlineSearch"][0], default_Language) #generate voice from the default sentences
+
+                    respond =  search_wikipedia_summary(response,language,queue,3)
+                    
+                    if respond != "":
                         
-                    if location == "":
+                        generateAudio(respond, default_Language) #generate voice from the respond
+                        queue.put("Correct search online data") #log system flag for correct data
+
+                    else: 
                         
-                        generateAudio(default_sentences["weatherNotLoc"][0], default_Language) #generate voice from the default sentences
-                        queue.put("Error: local data not set in scope") #log system flag for error if is not loc
+                        queue.put("Error: search online data") #log system flag an error
+                
+                elif any(keyword in response for keyword in keyWords["putAlarm"]) and "alarma" in response:
+
+                    """
+                    Module for AlarmHandler.
+
+                    This module handles alarm-setting queries. If the user's request includes any of the specified keywords for setting an alarm and the word "alarma":
+
+                    1. The system logs the entry into the alarm module and generates an audio message indicating the start of the alarm setup.
+                    2. It captures the user's voice input for the alarm time, extracts the time from the input, and sets the alarm accordingly.
+                    3. Based on the default language, it generates an appropriate audio message confirming the alarm time.
+                    4. Finally, it starts the alarm thread and logs the successful alarm setup.
+                    """
+
+                    print("------------------")
+                    print("Alarm system:")
+                    print("------------------")
+                        
+                    queue.put("Entry to alarm module") #log system flag access to the alarm block
+                        
+                    generateAudio(default_sentences["putAlarm"][0], default_Language) #generate voice from the default sentences
+                    
+                    response = ""
+                    response = getVoice(default_Language).lower()
+                    alarm_time  = extract_time(response)
+                        
+                    if default_Language == "en-US":
+                        
+                        generateAudio("alarm "+alarm_time, default_Language) #generate voice from the default sentences in Es
+                        
+                    elif default_Language == "es-ES":
+                        
+                        generateAudio("alarma configurada "+alarm_time, default_Language) #generate voice from the default sentences in En
+                        start_alarm_thread(alarm_time)
+                        queue.put("Correct alarm set") #log system flag for alarm set
+                    
+                elif any(keyword in response for keyword in keyWords["weatherUtilities"]):
+
+                    """
+                    Module for weather handler.
+
+                    This module handles weather-related queries. If the user's request includes any of the specified keywords for weather utilities:
+
+                    1. The system logs the entry into the weather module and attempts to identify the city from the user's query using a JSON file.
+                    2. If no city is found in the query, it defaults to the user's registered location. If no location is available, it generates an audio message indicating the error and logs it.
+                    3. If a city is identified and the API key is configured:
+                    - It fetches weather data for the specified city.
+                    - Logs the successful data retrieval.
+                    - Generates an audio message with the weather information.
+                    - Logs the error if the data retrieval fails.
+                    """
+
+                    print("------------------")
+                    print("Weather system:")
+                    print("------------------")
+                        
+                    queue.put("Entry to Weather module") #log system flag for access to the weather module
+                        
+                    city = search_weather_keyword(response,File[9])#read the city from the json file
+                    print(city)
+
+                    if city == "":
                             
-                    else:
-                        
-                        start_date = "today" # start date
-                        end_date = "today" # end date
-
-                        if API_KEY :
+                        city = location[0] #in case of no location in sentence , auto add location fron register
                             
-                            respond = get_weather(city,API_KEY,language,queue)
-                            queue.put("Weather correct data ") #log system flag correct data get
+                        if location == "":
                             
-                            if respond:
-                                generateAudio(respond, default_Language) #generate voice from the respond
+                            generateAudio(default_sentences["weatherNotLoc"][0], default_Language) #generate voice from the default sentences
+                            queue.put("Error: local data not set in scope") #log system flag for error if is not loc
                                 
-                            else:
+                        else:
+                            
+                            start_date = "today" # start date
+                            end_date = "today" # end date
+
+                            if API_KEY :
                                 
-                                print("Could not get time information.")
-                                queue.put("Could not get time information.") #log system flag for error of data
+                                respond = get_weather(city,API_KEY,language,queue)
+                                queue.put("Weather correct data ") #log system flag correct data get
+                                
+                                if respond:
+                                    generateAudio(respond, default_Language) #generate voice from the respond
+                                    
+                                else:
+                                    
+                                    print("Could not get time information.")
+                                    queue.put("Could not get time information.") #log system flag for error of data
                 
                 elif any(keyword in response for keyword in keyWords["openUtilities"]):
 

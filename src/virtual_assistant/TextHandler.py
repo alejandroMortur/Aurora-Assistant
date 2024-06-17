@@ -183,6 +183,58 @@ def find_city_and_state_in_phrase(phrase, cities_data):
     # If no city and state are found
     return []
 
+def text_cleaner(text, max_length=200):
+    
+    """
+    Cleans text by removing HTML tags, special characters, and limiting its length.
+
+    Parameters:
+    - text (str): The text to clean.
+    - max_length (int): The maximum allowed length of the cleaned text. Default is 200 characters.
+
+    Returns:
+    - clean_text (str): The cleaned text.
+    """
+    
+    # Remove HTML/XML tags
+    clean_text = re.sub(r'<.*?>', '', text)
+    
+    # Remove character count indicators
+    clean_text = re.sub(r'\[\+\d+ chars\]', '', clean_text)
+    
+    # Remove special characters except space, letters, and commas
+    clean_text = re.sub(r'[^\w\s,]', '', clean_text)
+    
+    if len(clean_text) <= max_length:
+        return clean_text.strip()
+    
+    # Cut the text at the last period found or at an incomplete word
+    last_period_index = clean_text.rfind('.')
+    
+    if last_period_index != -1:  # If a period is found in the text
+        clean_text = clean_text[:last_period_index + 1]  # Keep only up to the last period and the following space
+        
+    else:
+        
+        # If no periods are found in the text, find the closest space before the maximum allowed length
+        closest_space_index = max_length
+        
+        for i in range(max_length // 2, max_length):
+            if clean_text[i] == ' ':
+                closest_space_index = i
+                break
+            
+        # Cut the text up to the closest space
+        clean_text = clean_text[:closest_space_index]
+        
+        # Remove the last word if it's incomplete
+        last_space_index = clean_text.rfind(' ')
+        
+        if last_space_index != -1:
+            clean_text = clean_text[:last_space_index]
+        
+    return clean_text.strip()  # Remove leading and trailing spaces
+
 def save_user_data(location, default_Language, language, news_lock, filename):
     """
     Saves the given data to a binary file using pickle.

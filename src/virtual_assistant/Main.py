@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from GenerateModule import generateAudio
 from MicHandler import getVoice
 from LLMModule import getLLMText
-from TextHandler import read_file, read_word, read_lines,search_weather_keyword,  get_country_from_city, find_city_and_state_in_phrase, text_cleaner
+from TextHandler import read_file, read_word, read_lines,search_weather_keyword,  get_country_from_city, find_city_and_state_in_phrase, save_user_data, load_user_data
 from pyfuncionmodules.wikiModule import search_wikipedia_summary
 from pyfuncionmodules.alarmModule import start_alarm_thread, extract_time
 from pyfuncionmodules.weatherModule import get_weather
@@ -41,7 +41,8 @@ if __name__ == "__main__":
         "../resources/Text/textResources/EN/EnDefaultLoc03.txt",
         "../resources/Text/textResources/EN/EnUse04.txt",
         "../resources/Text/textResources/cities.json",
-        "../resources/Logs/Data.log"
+        "../resources/Logs/Data.log",
+        "../resources/datafile.db"
     ]
 
     #Log system run
@@ -55,147 +56,173 @@ if __name__ == "__main__":
 
     try:
         
-        #initial dialog load
-        content = read_file(File[0])
+        if not os.path.exists(File[11]):
+            #initial dialog load
+            content = read_file(File[0])
 
-        print("---------------------------")
-        print(content)
-        print("---------------------------")
+            print("---------------------------")
+            print(content)
+            print("---------------------------")
 
-        generateAudio(content, default_Language)#generate audio from text introduction file 
-        language = ""
-        language = getVoice(default_Language)
-
-        while language == None:
+            generateAudio(content, default_Language)#generate audio from text introduction file 
+            language = ""
             language = getVoice(default_Language)
 
-        #-----------------------------setup on first run code --------------------------------------------
-        #default language set 
+            while language == None:
+                language = getVoice(default_Language)
 
-        if "castellano" in language or "Castellano" in language:
-            
-            queue.put("Castellano for default language chosen")#log system flag for language set
-    
-            #set default language system for the MicModule system
-            default_Language = "es-ES"
-            language = "es"
-            
-            generateAudio("Entendido, te hablaré en castellano a partir de ahora", default_Language)
-            
-            #load keyword and default sentences
-            keyWords = read_word(File[1])
-            default_sentences = read_lines(File[2])
-            
-            queue.put("Correct default keyword and sentences lecture")#log system flag for keyword and default sentences
-            
-            print("---------------------------")
-            print("Loaded data: " + str(keyWords) + "| " + str(default_sentences))
-            print("---------------------------")
+            #-----------------------------setup on first run code --------------------------------------------
+            #default language set 
+
+            if "castellano" in language or "Castellano" in language:
+                
+                queue.put("Castellano for default language chosen")#log system flag for language set
         
-            #default location set spanish
-            content = read_file(File[3])#load loc dialog fro file
-
-            print("---------------------------")
-            print(content)
-            print("---------------------------")
-
-            generateAudio(content, default_Language)#generate audio from text loc file 
+                #set default language system for the MicModule system
+                default_Language = "es-ES"
+                language = "es"
+                
+                generateAudio("Entendido, te hablaré en castellano a partir de ahora", default_Language)
+                
+                #load keyword and default sentences
+                keyWords = read_word(File[1])
+                default_sentences = read_lines(File[2])
+                
+                queue.put("Correct default keyword and sentences lecture")#log system flag for keyword and default sentences
+                
+                print("---------------------------")
+                print("Loaded data: " + str(keyWords) + "| " + str(default_sentences))
+                print("---------------------------")
             
-            #code to get respond from the user
-            region = ""
-            region = getVoice(default_Language)
+                #default location set spanish
+                content = read_file(File[3])#load loc dialog fro file
 
-            while region == "":
+                print("---------------------------")
+                print(content)
+                print("---------------------------")
+
+                generateAudio(content, default_Language)#generate audio from text loc file 
+                
+                #code to get respond from the user
+                region = ""
+                region = getVoice(default_Language)
+
+                while region == "":
+                    region = getVoice(default_Language)
+                    
+                #if user had said no , the assistant will block de news system (because not loc seted)
+                if "no" in region or "No" in region:
+                    
+                    generateAudio("Entendido, el sistema de noticias queda deshabilitado", default_Language)
+                    queue.put("No location set")#log system flag for block news system
+                    news_lock = True#set bool block true
+                    
+                #if user had said a loc, then we find the loc in the loc file and we save it
+                else:
+                    
+                    location = find_city_and_state_in_phrase(region,File[9])
+                    
+                    #generate confirmation voice
+                    generateAudio("Entendido, a si que vives en "+str(location[0])+", en el estado "+str(location[1])+", "+str(location[2]), default_Language)
+                    
+                    queue.put("Location set: "+str(location))#log system flag for loc set
+                    print("location of user: "+str(location))
+                    
+                #get final tutorial dialog for user
+                content = read_file(File[4])
+                
+                print("---------------------------")
+                print(content)
+                print("---------------------------")
+                
+                generateAudio(content, default_Language)#generate final tutorial voice from text
+                
+                # Save data to binary file
+                save_user_data(location, default_Language, language, news_lock, File[11])
+                
+                queue.put("-----------------------------")
+                queue.put("Data from user saved")#saved data log system flag
+                queue.put("-----------------------------")
+                
+            elif "Inglés" in language or "English" in language:
+                
+                queue.put("English for default language chosen")#log system flag for language set
+                
+                #set default language system for the MicModule system
+                default_Language = "en-US"
+                language = "en"
+                
+                #log system flag for keyword and default sentences
+                keyWords = read_word(File[5])
+                default_sentences = read_lines(File[6])
+                
+                generateAudio("Got it, I will speak to you in English from now on", default_Language)
+                
+                print("---------------------------")
+                print("Loaded data: " + str(keyWords) + "| " + str(default_sentences))
+                print("---------------------------")
+                
+            #default location set english
+                content = read_file(File[7])#load loc dialog fro file
+                
+                print("---------------------------")
+                print(content)
+                print("---------------------------")
+                
+                generateAudio(content, default_Language)#generate audio from text loc file 
+                
+                #code to get respond from the user
+                #while loop used to get al the time the voice if is an error during record
+                region = ""
                 region = getVoice(default_Language)
                 
-            #if user had said no , the assistant will block de news system (because not loc seted)
-            if "no" in region or "No" in region:
+                while region == "":
+                    region = getVoice(default_Language)
+                    
+                #if user had said no , the assistant will block de news system (because not loc seted)
+                if "no" in region or "No" in region:
+                    
+                    generateAudio("Understood, the news system is disabled then", default_Language)
+                    queue.put("No location set")#log system flag for block news system
+                    news_lock = True#set bool block true
+                    
+                #if user had said a loc, then we find the loc in the loc file and we save it
+                else:
+                    
+                    location = find_city_and_state_in_phrase(region,File[9])
+                    
+                    #generate confirmation voice
+                    generateAudio("Got it soo you live in "+str(location[0])+", in the state "+str(location[1])+", "+str(location[2]), default_Language)
+                    queue.put("Location set by user")#log system flag for loc set
+                    
+                    print("location of user: "+str(location[0])+", en el estado "+str(location[1])+", "+str(location[2]))
+                    
+                #get final tutorial dialog for user
+                content = read_file(File[8])
                 
-                generateAudio("Entendido, el sistema de noticias queda deshabilitado", default_Language)
-                queue.put("No location set")#log system flag for block news system
-                news_lock = True#set bool block true
+                print("---------------------------")
+                print(content)
+                print("---------------------------")
                 
-            #if user had said a loc, then we find the loc in the loc file and we save it
-            else:
+                generateAudio(content, default_Language)#generate final tutorial voice from text
                 
-                location = find_city_and_state_in_phrase(region,File[9])
+                # Save data to binary file
+                save_user_data(location, default_Language, language, news_lock, File[11])
                 
-                #generate confirmation voice
-                generateAudio("Entendido, a si que vives en "+str(location[0])+", en el estado "+str(location[1])+", "+str(location[2]), default_Language)
+                queue.put("-----------------------------")
+                queue.put("Data from user saved")#saved data log system flag
+                queue.put("-----------------------------")
+            
+        else:
                 
-                queue.put("Location set: "+str(location))#log system flag for loc set
-                print("location of user: "+str(location))
+            location, default_Language, language, news_lock =  load_user_data(File[11])
                 
-            #get final tutorial dialog for user
-            content = read_file(File[4])
-            
-            print("---------------------------")
-            print(content)
-            print("---------------------------")
-            
-            generateAudio(content, default_Language)#generate final tutorial voice from text
-            
-        elif "Inglés" in language or "English" in language:
-            
-            queue.put("English for default language choosen")#log system flag for language set
-            
-            #set default language system for the MicModule system
-            default_Language = "en-US"
-            language = "en"
-            
-            #log system flag for keyword and default sentences
+            queue.put("-----------------------------")
+            queue.put("Data from user loaded")#load data log system flag
+            queue.put("-----------------------------")
+                
             keyWords = read_word(File[5])
             default_sentences = read_lines(File[6])
-            
-            generateAudio("Got it, I will speak to you in English from now on", default_Language)
-            
-            print("---------------------------")
-            print("Loaded data: " + str(keyWords) + "| " + str(default_sentences))
-            print("---------------------------")
-            
-        #default location set english
-            content = read_file(File[7])#load loc dialog fro file
-            
-            print("---------------------------")
-            print(content)
-            print("---------------------------")
-            
-            generateAudio(content, default_Language)#generate audio from text loc file 
-            
-            #code to get respond from the user
-            #while loop used to get al the time the voice if is an error during record
-            region = ""
-            region = getVoice(default_Language)
-            
-            while region == "":
-                region = getVoice(default_Language)
-                
-            #if user had said no , the assistant will block de news system (because not loc seted)
-            if "no" in region or "No" in region:
-                
-                generateAudio("Understood, the news system is disabled then", default_Language)
-                queue.put("No location set")#log system flag for block news system
-                news_lock = True#set bool block true
-                
-            #if user had said a loc, then we find the loc in the loc file and we save it
-            else:
-                
-                location = find_city_and_state_in_phrase(region,File[9])
-                
-                #generate confirmation voice
-                generateAudio("Got it soo you live in "+str(location[0])+", in the state "+str(location[1])+", "+str(location[2]), default_Language)
-                queue.put("Location set by user")#log system flag for loc set
-                
-                print("location of user: "+str(location[0])+", en el estado "+str(location[1])+", "+str(location[2]))
-                
-            #get final tutorial dialog for user
-            content = read_file(File[8])
-            
-            print("---------------------------")
-            print(content)
-            print("---------------------------")
-            
-            generateAudio(content, default_Language)#generate final tutorial voice from text
             
         #---------------------------------------------------------------------------------------------------
         

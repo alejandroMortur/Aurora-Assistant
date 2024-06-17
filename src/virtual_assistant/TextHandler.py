@@ -1,6 +1,8 @@
 import json
 import re
+import os
 from unidecode import unidecode
+import pickle
 
 def read_file(file_path):
     
@@ -181,55 +183,44 @@ def find_city_and_state_in_phrase(phrase, cities_data):
     # If no city and state are found
     return []
 
-def text_cleaner(text, max_length=200):
-    
+def save_user_data(location, default_Language, language, news_lock, filename):
     """
-    Cleans text by removing HTML tags, special characters, and limiting its length.
+    Saves the given data to a binary file using pickle.
 
     Parameters:
-    - text (str): The text to clean.
-    - max_length (int): The maximum allowed length of the cleaned text. Default is 200 characters.
+    - location (tuple): The location data to be saved. Can be None.
+    - default_Language (str): The default language setting.
+    - language (str): The language setting.
+    - news_lock (bool): The news lock status.
+    - filename (str): The name of the file to save the data. Default is 'data.bin'.
 
     Returns:
-    - clean_text (str): The cleaned text.
+    - None
     """
     
-    # Remove HTML/XML tags
-    clean_text = re.sub(r'<.*?>', '', text)
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(filename), exist_ok=True)   
     
-    # Remove character count indicators
-    clean_text = re.sub(r'\[\+\d+ chars\]', '', clean_text)
-    
-    # Remove special characters except space, letters, and commas
-    clean_text = re.sub(r'[^\w\s,]', '', clean_text)
-    
-    if len(clean_text) <= max_length:
-        return clean_text.strip()
-    
-    # Cut the text at the last period found or at an incomplete word
-    last_period_index = clean_text.rfind('.')
-    
-    if last_period_index != -1:  # If a period is found in the text
-        clean_text = clean_text[:last_period_index + 1]  # Keep only up to the last period and the following space
-        
-    else:
-        
-        # If no periods are found in the text, find the closest space before the maximum allowed length
-        closest_space_index = max_length
-        
-        for i in range(max_length // 2, max_length):
-            if clean_text[i] == ' ':
-                closest_space_index = i
-                break
-            
-        # Cut the text up to the closest space
-        clean_text = clean_text[:closest_space_index]
-        
-        # Remove the last word if it's incomplete
-        last_space_index = clean_text.rfind(' ')
-        
-        if last_space_index != -1:
-            clean_text = clean_text[:last_space_index]
-        
-    return clean_text.strip()  # Remove leading and trailing spaces
+    data = {
+        'location': location,
+        'default_Language': default_Language,
+        'language': language,
+        'news_lock': news_lock
+    }
+    with open(filename, 'wb') as file:
+        pickle.dump(data, file)
+
+def load_user_data(filename='data.bin'):
+    """
+    Loads data from a binary file using pickle.
+
+    Parameters:
+    - filename (str): The name of the file to load the data from. Default is 'data.bin'.
+
+    Returns:
+    - tuple: A tuple containing the location, default_Language, language, and news_lock.
+    """
+    with open(filename, 'rb') as file:
+        data = pickle.load(file)
+        return data['location'], data['default_Language'], data['language'], data['news_lock']
 

@@ -48,3 +48,4 @@ If you want to run all the tests without having to go 1 by 1, run the 'test_main
 
 ![Estructure of the test of the project](./src/resources/images/markmap-Aurora-Tests.png)
 
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

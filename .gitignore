@@ -8,7 +8,7 @@
 .env
 
 # Ignore .db file
-.db
+*.db
 
 # Ignore Python byte-compiled files
 *.pyc

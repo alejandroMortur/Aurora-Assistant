@@ -7,6 +7,9 @@
 # Ignore .env file
 .env
 
+# Ignore .db file
+.db
+
 # Ignore Python byte-compiled files
 *.pyc
 __pycache__/

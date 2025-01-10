@@ -5,8 +5,6 @@ Aurora is a versatile and intuitive virtual assistant developed in Python. Desig
 ## Features ℹ️
 
 - **Information Retrieval**: Get instant access to weather updates, news headlines. 🌤️ 📰
-- **Customizable**: Easily extend Aurora's capabilities by adding custom skills and integrations. 🛠️
-- **User-Friendly Interface**: Interact with Aurora using natural language for a seamless experience. 💬
 
 ## Installation 🛠️
 
@@ -23,7 +21,7 @@ To install Aurora, follow these steps:
    ```bash
    pip install -r requirements.txt
    ```
-3. Download LLM Studio an set down the model you want:
+3. Download LLM Studio or other LLM loader an set down the model you want:
 
    Visit [LM Studio](https://lmstudio.ai) to download LLM Studio.
 
